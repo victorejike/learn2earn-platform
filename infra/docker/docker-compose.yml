@@ -1,0 +1,126 @@
+version: "3.9"
+
+services:
+  # ─── Databases ───────────────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    container_name: talent_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: 1talent
+      POSTGRES_USER: talent_user
+      POSTGRES_PASSWORD: talent_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U talent_user -d 1talent"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: talent_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─── Internal Git Server ──────────────────────────────────────
+  gitea:
+    image: gitea/gitea:1.22-rootless
+    container_name: talent_gitea
+    restart: unless-stopped
+    environment:
+      GITEA__database__DB_TYPE: postgres
+      GITEA__database__HOST: db:5432
+      GITEA__database__NAME: gitea
+      GITEA__database__USER: talent_user
+      GITEA__database__PASSWD: talent_pass
+      GITEA__server__HTTP_PORT: 3000
+      GITEA__server__DOMAIN: localhost
+      GITEA__server__ROOT_URL: http://localhost:3002/
+      GITEA__webhook__ALLOWED_HOST_LIST: "api-gateway,localhost"
+    ports:
+      - "3002:3000"
+      - "222:22"
+    volumes:
+      - gitea_data:/var/lib/gitea
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # ─── Dev Mail Catcher ─────────────────────────────────────────
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: talent_mailhog
+    restart: unless-stopped
+    ports:
+      - "1025:1025"   # SMTP
+      - "8025:8025"   # Web UI
+
+  # ─── API Gateway ─────────────────────────────────────────────
+  api-gateway:
+    build:
+      context: ../../services/api-gateway
+      dockerfile: Dockerfile
+    container_name: talent_api
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://talent_user:talent_pass@db:5432/1talent
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: dev-secret-change-in-prod
+      PORT: 4000
+    ports:
+      - "4000:4000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    profiles:
+      - full
+
+  # ─── Student Web App ─────────────────────────────────────────
+  web:
+    build:
+      context: ../../apps/web
+      dockerfile: Dockerfile
+    container_name: talent_web
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:4000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api-gateway
+    profiles:
+      - full
+
+  # ─── Admin Dashboard ─────────────────────────────────────────
+  admin:
+    build:
+      context: ../../apps/admin
+      dockerfile: Dockerfile
+    container_name: talent_admin
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    depends_on:
+      - api-gateway
+    profiles:
+      - full
+
+volumes:
+  db_data:
+  redis_data:
+  gitea_data:
