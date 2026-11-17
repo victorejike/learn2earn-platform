@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import App from './App.tsx';
+import App from './App';
 import './index.css';
 
 const httpLink = createHttpLink({ uri: '/graphql' });

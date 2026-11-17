@@ -297,11 +297,24 @@ This section is updated with every significant commit.
 - Health check endpoint: `GET /health`
 
 **Student portal (React + TypeScript + Tailwind)**
-- Login page with JWT auth
+- **01Edu-Mirroring Entry Portal (`PortalPage.tsx`)**:
+  - Exact 01Edu 2-column layout matching `learn.reboot01.com`
+  - High-tech dynamic neural mesh background (`TechBackground.tsx`) with lively animated HTML5 canvas (floating particles, glowing constellation nodes, interactive cursor connection lines)
+  - 1Talent dot-matrix LED pixel brand logo (`TalentLogo.tsx`)
+  - Authentic monospace typography (`JetBrains Mono`, `Space Mono`)
+  - Left panel: "Welcome to 1Talent !" with 3-step admission instructions and platform trust indicators
+  - Right panel: "Log in to resume your works" with password eyeball toggle, forgot password modal, and smooth inline switch to registration
+  - Multi-tenant campus badge (`Campus: Learn2Earn`) and one-click dev testing credentials helper
 - Dashboard: personal XP/level stats + campus overview (staff only) + available projects
 - Projects page: list all available projects
 - Profile page: XP, level, audit ratio, correction points
 - Protected routes, Apollo Client, persistent auth token
+
+**Admissions & Selection Engine**
+- Migration `004_admissions.sql`: `admission_applications`, `admission_questions`, `admission_tests`
+- Timed 60-minute cognitive & logic assessment with auto-grading
+- Multi-step application flow: personal info, background, motivation, review
+- Status tracking: draft → submitted → under_review → invited_to_test → test_passed/failed → accepted
 
 **Admin dashboard (React + TypeScript + Tailwind)**
 - Staff-only login (role-gated)

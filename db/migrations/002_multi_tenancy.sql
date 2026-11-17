@@ -72,10 +72,11 @@ ALTER TABLE users ADD CONSTRAINT users_username_org_unique UNIQUE (org_id, usern
 ALTER TABLE users DROP CONSTRAINT IF EXISTS users_email_key;
 ALTER TABLE users ADD CONSTRAINT users_email_org_unique UNIQUE (org_id, email);
 
--- Cohorts belong to an org
-ALTER TABLE cohorts ADD COLUMN org_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE
-  DEFAULT (SELECT id FROM organizations WHERE slug = '1talent');
-ALTER TABLE cohorts ALTER COLUMN org_id DROP DEFAULT;
+-- Cohorts belong to an org. PostgreSQL does not allow a subquery in a
+-- DEFAULT expression, so backfill first and then enforce NOT NULL.
+ALTER TABLE cohorts ADD COLUMN org_id UUID REFERENCES organizations(id) ON DELETE CASCADE;
+UPDATE cohorts SET org_id = (SELECT id FROM organizations WHERE slug = '1talent');
+ALTER TABLE cohorts ALTER COLUMN org_id SET NOT NULL;
 CREATE INDEX idx_cohorts_org ON cohorts(org_id);
 
 -- Projects can be org-private OR platform-shared (org_id NULL = shared template)

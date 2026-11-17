@@ -4,8 +4,9 @@ import { Routes, Route, Navigate, NavLink, Outlet } from 'react-router-dom';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import {
   LayoutDashboard, Users, GraduationCap, AlertTriangle,
-  TrendingUp, Award, Zap, LogOut, Shield, BookOpen
+  TrendingUp, Award, Zap, LogOut, Shield, BookOpen, ClipboardCheck
 } from 'lucide-react';
+import AdmissionsPage from './features/admissions/AdmissionsPage';
 
 // ─── GraphQL ──────────────────────────────────────────────────
 
@@ -37,6 +38,7 @@ const STUDENTS_QUERY = gql`
 // ─── Shared UI ────────────────────────────────────────────────
 
 function Badge({ status }: { status: string }) {
+  const normalized = status.toLowerCase();
   const map: Record<string, string> = {
     active:               'bg-green-900/60 text-green-300 border border-green-800',
     at_risk:              'bg-orange-900/60 text-orange-300 border border-orange-800',
@@ -48,8 +50,8 @@ function Badge({ status }: { status: string }) {
     rejected:             'bg-red-900/60 text-red-300 border border-red-800',
   };
   return (
-    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${map[status] ?? 'bg-gray-800 text-gray-400'}`}>
-      {status.replace(/_/g, ' ')}
+    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${map[normalized] ?? 'bg-gray-800 text-gray-400'}`}>
+      {normalized.replace(/_/g, ' ')}
     </span>
   );
 }
@@ -86,7 +88,7 @@ function LoginPage() {
     try {
       const { data } = await login({ variables: { email, password } });
       const role = data.login.user.role;
-      if (!['campus_staff', 'head_of_campus', 'admin'].includes(role)) {
+      if (!['CAMPUS_STAFF', 'HEAD_OF_CAMPUS', 'ADMIN', 'SUPER_ADMIN'].includes(role)) {
         setError('Access denied. Staff accounts only.');
         return;
       }
@@ -156,7 +158,7 @@ function AdminLayout() {
             <div>
               <p className="font-bold text-white text-sm">1Talent</p>
               <p className="text-xs text-gray-500 capitalize">
-                {data?.me?.role?.replace(/_/g, ' ') ?? 'Admin'}
+                 {data?.me?.role?.toLowerCase().replace(/_/g, ' ') ?? 'Admin'}
               </p>
             </div>
           </div>
@@ -169,6 +171,9 @@ function AdminLayout() {
           </NavLink>
           <NavLink to="/students" className={({ isActive }) => `${navItem} ${isActive ? active : ''}`}>
             <Users className="w-5 h-5" /><span>Students</span>
+          </NavLink>
+          <NavLink to="/admissions" className={({ isActive }) => `${navItem} ${isActive ? active : ''}`}>
+            <ClipboardCheck className="w-5 h-5" /><span>Admissions</span>
           </NavLink>
           <NavLink to="/at-risk" className={({ isActive }) => `${navItem} ${isActive ? active : ''}`}>
             <AlertTriangle className="w-5 h-5" /><span>At-Risk Students</span>
@@ -185,7 +190,7 @@ function AdminLayout() {
         <div className="p-4 border-t border-gray-800 space-y-2">
           <div className="px-4 py-2">
             <p className="text-white text-sm font-medium truncate">{data?.me?.fullName}</p>
-            <p className="text-gray-500 text-xs capitalize">{data?.me?.role?.replace(/_/g, ' ')}</p>
+            <p className="text-gray-500 text-xs capitalize">{data?.me?.role?.toLowerCase().replace(/_/g, ' ')}</p>
           </div>
           <button onClick={logout}
             className={`${navItem} w-full text-red-400 hover:text-red-300 hover:bg-red-900/20`}>
@@ -352,7 +357,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
     </div>
   );
   if (!data?.me) return <Navigate to="/login" replace />;
-  const allowed = ['campus_staff', 'head_of_campus', 'admin'];
+  const allowed = ['CAMPUS_STAFF', 'HEAD_OF_CAMPUS', 'ADMIN', 'SUPER_ADMIN'];
   if (!allowed.includes(data.me.role)) return <Navigate to="/login" replace />;
   return <>{children}</>;
 }
@@ -367,6 +372,7 @@ export default function App() {
         <Route index element={<Navigate to="/dashboard" replace />} />
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="students"  element={<StudentsPage />} />
+        <Route path="admissions" element={<AdmissionsPage />} />
         <Route path="at-risk"   element={<AtRiskPage />} />
         <Route path="cohorts"   element={<PlaceholderPage title="Cohorts & Piscine" icon={GraduationCap} />} />
         <Route path="projects"  element={<PlaceholderPage title="Projects" icon={BookOpen} />} />
