@@ -196,14 +196,22 @@ export default function PortalPage() {
     <div className="relative min-h-screen w-full bg-[#030712] text-[#d1d5db] font-mono selection:bg-[#0066ff] selection:text-white flex flex-col justify-between overflow-x-hidden">
       {/* 
         ========================================================================
-        PANORAMIC BLUE TECHNOLOGY BACKGROUND (Clean, Static, High-Definition)
+        PANORAMIC BLUE TECHNOLOGY BACKGROUND
+        Cinematic Orbital Approach: Shifts smoothly to the left and zooms as you
+        approach registration and profile completion ("approaching orbit")
         ========================================================================
       */}
       <div
-        className="fixed inset-0 pointer-events-none z-0 bg-cover bg-center bg-no-repeat"
+        className={`fixed -inset-10 sm:-inset-16 pointer-events-none z-0 bg-cover bg-no-repeat transition-all duration-1000 ease-out ${
+          mode === 'complete-profile'
+            ? 'translate-x-[-35px] sm:translate-x-[-65px] lg:translate-x-[-100px] scale-[1.07] bg-[position:65%_center]'
+            : mode === 'register'
+            ? 'translate-x-[-20px] sm:translate-x-[-40px] scale-[1.03] bg-[position:55%_center]'
+            : 'translate-x-0 scale-100 bg-center'
+        }`}
         style={{
           backgroundImage: `url(${techBgWide})`,
-          filter: 'brightness(1.0) contrast(1.15)',
+          filter: mode === 'complete-profile' ? 'brightness(1.08) contrast(1.18)' : 'brightness(1.0) contrast(1.15)',
         }}
       />
 
@@ -303,7 +311,7 @@ export default function PortalPage() {
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     placeholder="Victor"
-                    className="w-full bg-transparent border-0 border-b border-gray-600 focus:border-[#00d4ff] pb-2 pt-1 text-base text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
+                    className="w-full bg-transparent focus:bg-[#131d36]/75 border-0 border-b border-gray-600 focus:border-[#00d4ff] px-2.5 pb-2 pt-2 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
                   />
                 </div>
 
@@ -317,8 +325,8 @@ export default function PortalPage() {
                     required
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    placeholder="Ejike"
-                    className="w-full bg-transparent border-0 border-b border-gray-600 focus:border-[#00d4ff] pb-2 pt-1 text-base text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
+                    placeholder="Ejik"
+                    className="w-full bg-transparent focus:bg-[#131d36]/75 border-0 border-b border-gray-600 focus:border-[#00d4ff] px-2.5 pb-2 pt-2 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
                   />
                 </div>
 
@@ -334,12 +342,12 @@ export default function PortalPage() {
                       value={profilePassword}
                       onChange={(e) => setProfilePassword(e.target.value)}
                       placeholder="••••••••••••"
-                      className="w-full bg-transparent border-0 border-b border-gray-600 focus:border-[#00d4ff] pb-2 pt-1 pr-10 text-base text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
+                      className="w-full bg-transparent focus:bg-[#131d36]/75 border-0 border-b border-gray-600 focus:border-[#00d4ff] px-2.5 pb-2 pt-2 pr-10 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
                     />
                     <button
                       type="button"
                       onClick={() => setShowProfilePassword(!showProfilePassword)}
-                      className="absolute right-1 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#00d4ff] transition-colors p-1"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#00d4ff] transition-colors p-1"
                       aria-label="Toggle password visibility"
                     >
                       {showProfilePassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -358,7 +366,7 @@ export default function PortalPage() {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="••••••••••••"
-                    className="w-full bg-transparent border-0 border-b border-gray-600 focus:border-[#00d4ff] pb-2 pt-1 text-base text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
+                    className="w-full bg-transparent focus:bg-[#131d36]/75 border-0 border-b border-gray-600 focus:border-[#00d4ff] px-2.5 pb-2 pt-2 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
                   />
                 </div>
 
@@ -435,7 +443,7 @@ export default function PortalPage() {
                     value={emailOrUsername}
                     onChange={(e) => setEmailOrUsername(e.target.value)}
                     placeholder="victorejiki@gmail.com"
-                    className="w-full bg-transparent border-0 border-b border-gray-600 focus:border-[#00d4ff] pb-2 pt-1 text-base text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
+                    className="w-full bg-transparent focus:bg-[#131d36]/75 border-0 border-b border-gray-600 focus:border-[#00d4ff] px-2.5 pb-2 pt-2 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
                   />
                 </div>
 
@@ -451,12 +459,12 @@ export default function PortalPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••••••"
-                      className="w-full bg-transparent border-0 border-b border-gray-600 focus:border-[#00d4ff] pb-2 pt-1 pr-10 text-base text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
+                      className="w-full bg-transparent focus:bg-[#131d36]/75 border-0 border-b border-gray-600 focus:border-[#00d4ff] px-2.5 pb-2 pt-2 pr-10 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-1 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#00d4ff] transition-colors p-1"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#00d4ff] transition-colors p-1"
                       aria-label="Toggle password visibility"
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -525,7 +533,7 @@ export default function PortalPage() {
                     value={regEmail}
                     onChange={(e) => setRegEmail(e.target.value)}
                     placeholder="victorejiki@gmail.com"
-                    className="w-full bg-transparent border-0 border-b border-gray-600 focus:border-[#00d4ff] pb-2 pt-1 text-base text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
+                    className="w-full bg-transparent focus:bg-[#131d36]/75 border-0 border-b border-gray-600 focus:border-[#00d4ff] px-2.5 pb-2 pt-2 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
                   />
                 </div>
 

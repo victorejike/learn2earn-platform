@@ -299,7 +299,8 @@ This section is updated with every significant commit.
 **Student portal (React + TypeScript + Tailwind)**
 - **1Talent Entry Portal (`PortalPage.tsx`)**:
   - Seamless feathered blue technology network background (`tech-bg-wide.jpg`, 1920x1080) with 0 seams, zero edge cutoffs, and wide unzoomed perspective
-  - **Calm, High-Definition Aesthetic**: Moving electron particles removed for a distraction-free, senior UI standard with optimal text legibility and deep contrast
+  - **Cinematic Orbital Approach**: Smooth 1-second transition shifts the constellation background to the left (`-translate-x-16` to `-100px`, `scale-107`) as candidates transition from login into registration and profile setup, creating the immersive sensation of approaching orbit while keeping all UI elements pristine
+  - **Interactive Terminal Input Focus**: Inputs highlight with a subtle slate-blue translucent background (`focus:bg-[#131d36]/75`) and vibrant electric cyan bottom border on focus
   - Authoritative brand mark: **`1Talent`** (capital T)
   - Left side: "Welcome to 1Talent !" in confident bold monospace (text-4xl to 5xl, single line `whitespace-nowrap`), enhanced readable text size (text-base to text-lg), structured 3-step onboarding guide, contact link
   - Right side: Dynamic dual-mode auth module with sleek borderless underline inputs:
