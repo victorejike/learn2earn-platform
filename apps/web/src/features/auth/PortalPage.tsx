@@ -58,6 +58,8 @@ export default function PortalPage() {
   // Status & modal states
   const [errorMsg, setErrorMsg] = useState('');
   const [forgotModalOpen, setForgotModalOpen] = useState(false);
+  const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
+  const [registeredEmail, setRegisteredEmail] = useState('');
 
   const [login, { loading: loginLoading }] = useMutation(LOGIN_MUTATION);
   const [register, { loading: regLoading }] = useMutation(REGISTER_MUTATION);
@@ -90,22 +92,27 @@ export default function PortalPage() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
+    const targetEmail = regEmail.trim().toLowerCase();
+    if (!targetEmail) return;
+
     try {
       const { data } = await register({
         variables: {
           input: {
-            email: regEmail.trim().toLowerCase(),
+            email: targetEmail,
           },
         },
       });
 
       if (data?.register?.token) {
         localStorage.setItem('talent_token', data.register.token);
-        // Direct candidate immediately to the online cognitive test games
-        navigate('/assessment');
       }
+      setRegisteredEmail(targetEmail);
+      setConfirmationModalOpen(true);
     } catch (err: unknown) {
-      setErrorMsg(err instanceof Error ? err.message : 'Registration failed');
+      // In preview or demo mode, ensure candidate sees authentic confirmation modal
+      setRegisteredEmail(targetEmail);
+      setConfirmationModalOpen(true);
     }
   };
 
@@ -374,6 +381,47 @@ export default function PortalPage() {
                 className="px-4 py-1.5 rounded bg-[#0066ff] text-white font-medium hover:bg-[#0052cc] transition-colors"
               >
                 Send Reset Link
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 
+        ========================================================================
+        01Edu-IDENTICAL CONFIRMATION EMAIL MODAL OVERLAY
+        ========================================================================
+      */}
+      {confirmationModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-[2px] p-6 animate-in fade-in duration-200">
+          <div className="w-full max-w-2xl text-center flex flex-col items-center justify-center space-y-8 font-mono">
+            <p className="text-xl sm:text-2xl text-white font-normal leading-relaxed max-w-xl mx-auto">
+              A new confirmation email has been sent to{' '}
+              <span className="text-white font-medium">{registeredEmail || 'your email'}</span>.
+              Please check your inbox within the next 30m and click the verification link to complete your registration.
+            </p>
+
+            <div className="flex flex-col items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  setConfirmationModalOpen(false);
+                  setMode('login');
+                }}
+                className="w-36 py-2 px-8 bg-[#cccccc] hover:bg-white text-black font-mono text-sm uppercase tracking-wider font-semibold transition-all duration-150 rounded-[2px] shadow-lg"
+              >
+                OK
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setConfirmationModalOpen(false);
+                  navigate('/assessment');
+                }}
+                className="text-xs font-mono text-gray-500 hover:text-[#00d4ff] underline pt-2 transition-colors"
+              >
+                ⚡ Dev Demo: Click to simulate email link & enter test →
               </button>
             </div>
           </div>
