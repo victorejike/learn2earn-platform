@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useMutation, gql } from '@apollo/client';
 import { Eye, EyeOff } from 'lucide-react';
 import techBgWide from '../../assets/tech-bg-wide.jpg';
@@ -35,18 +35,26 @@ const REGISTER_MUTATION = gql`
 
 export default function PortalPage() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<'login' | 'register'>('login');
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  // Login form states
+  // Support ?action=register matching 01Edu URL behavior
+  const mode = searchParams.get('action') === 'register' ? 'register' : 'login';
+  const setMode = (newMode: 'login' | 'register') => {
+    if (newMode === 'register') {
+      setSearchParams({ action: 'register' });
+    } else {
+      setSearchParams({});
+    }
+    setErrorMsg('');
+  };
+
+  // Form states
   const [emailOrUsername, setEmailOrUsername] = useState('victorejiki@gmail.com');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  // Register form states
-  const [regFullName, setRegFullName] = useState('');
-  const [regUsername, setRegUsername] = useState('');
-  const [regEmail, setRegEmail] = useState('');
-  const [regPassword, setRegPassword] = useState('');
+  // Register form single-email state (matches 01Edu 1-field registration)
+  const [regEmail, setRegEmail] = useState('victorejiki@gmail.com');
 
   // Status & modal states
   const [errorMsg, setErrorMsg] = useState('');
@@ -87,17 +95,15 @@ export default function PortalPage() {
       const { data } = await register({
         variables: {
           input: {
-            fullName: regFullName.trim(),
-            username: regUsername.trim().toLowerCase(),
             email: regEmail.trim().toLowerCase(),
-            password: regPassword,
           },
         },
       });
 
       if (data?.register?.token) {
         localStorage.setItem('talent_token', data.register.token);
-        navigate('/application');
+        // Direct candidate immediately to the online cognitive test games
+        navigate('/assessment');
       }
     } catch (err: unknown) {
       setErrorMsg(err instanceof Error ? err.message : 'Registration failed');
@@ -144,7 +150,7 @@ export default function PortalPage() {
 
       {/* 
         ========================================================================
-        MAIN SECTION: 2-COLUMN EXPERIENCE WITH "BIGGER SMALL" TYPOGRAPHY
+        MAIN SECTION: 2-COLUMN EXPERIENCE
         ========================================================================
       */}
       <main className="relative z-10 flex-1 w-full max-w-7xl mx-auto px-8 sm:px-16 py-8 sm:py-12 flex flex-col lg:flex-row items-start justify-between gap-12 lg:gap-24">
@@ -195,7 +201,7 @@ export default function PortalPage() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: AUTH FORM WITH ELECTRIC BLUE ACTION */}
+        {/* RIGHT COLUMN: DYNAMIC AUTH (LOGIN OR REGISTER MATCHING 01EDU) */}
         <div className="w-full lg:w-5/12 max-w-md">
           {mode === 'login' ? (
             <div>
@@ -279,10 +285,7 @@ export default function PortalPage() {
                     New here? Join the fun!{' '}
                     <button
                       type="button"
-                      onClick={() => {
-                        setMode('register');
-                        setErrorMsg('');
-                      }}
+                      onClick={() => setMode('register')}
                       className="text-[#00d4ff] hover:text-white underline font-bold tracking-wider ml-1 transition-colors"
                     >
                       REGISTER NOW!
@@ -293,9 +296,9 @@ export default function PortalPage() {
             </div>
           ) : (
             <div>
-              {/* Register Mode */}
-              <h2 className="font-mono text-2xl sm:text-3xl font-normal tracking-wide text-[#00d4ff] mb-6">
-                Register to 1Talent
+              {/* Register Mode - Exact 01Edu Structure: Single Email Input */}
+              <h2 className="font-mono text-2xl sm:text-3xl font-normal tracking-wide text-[#b895ff] mb-6 leading-snug">
+                Create an account and get started on the online games
               </h2>
 
               {errorMsg && (
@@ -304,48 +307,10 @@ export default function PortalPage() {
                 </div>
               )}
 
-              <form onSubmit={handleRegister} className="space-y-4">
+              <form onSubmit={handleRegister} className="space-y-5">
                 <div>
-                  <label className="block font-mono text-xs sm:text-sm text-gray-300 mb-1">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={regFullName}
-                    onChange={(e) => setRegFullName(e.target.value)}
-                    placeholder="Victor Ejike"
-                    className="w-full bg-[#0a1124]/90 border-b border-[#1e293b] focus:border-[#00d4ff] px-3.5 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none font-mono"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block font-mono text-xs sm:text-sm text-gray-300 mb-1">
-                      Username
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={regUsername}
-                      onChange={(e) => setRegUsername(e.target.value)}
-                      placeholder="victor"
-                      className="w-full bg-[#0a1124]/90 border-b border-[#1e293b] focus:border-[#00d4ff] px-3.5 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none font-mono"
-                    />
-                  </div>
-                  <div>
-                    <label className="block font-mono text-xs sm:text-sm text-gray-300 mb-1">
-                      Campus
-                    </label>
-                    <div className="px-3.5 py-2.5 bg-[#0a1124]/90 border-b border-[#1e293b] text-xs sm:text-sm font-mono text-[#00d4ff] font-bold">
-                      Learn2Earn
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block font-mono text-xs sm:text-sm text-gray-300 mb-1">
-                    Email Address
+                  <label className="block font-mono text-sm font-medium text-gray-300 mb-1.5">
+                    Email
                   </label>
                   <input
                     type="email"
@@ -353,46 +318,31 @@ export default function PortalPage() {
                     value={regEmail}
                     onChange={(e) => setRegEmail(e.target.value)}
                     placeholder="victorejiki@gmail.com"
-                    className="w-full bg-[#0a1124]/90 border-b border-[#1e293b] focus:border-[#00d4ff] px-3.5 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none font-mono"
+                    className="w-full bg-[#0a1124]/90 border-b border-[#1e293b] focus:border-[#00d4ff] px-3.5 py-3 text-sm sm:text-base text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
                   />
                 </div>
 
-                <div>
-                  <label className="block font-mono text-xs sm:text-sm text-gray-300 mb-1">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    required
-                    value={regPassword}
-                    onChange={(e) => setRegPassword(e.target.value)}
-                    placeholder="••••••••••••"
-                    className="w-full bg-[#0a1124]/90 border-b border-[#1e293b] focus:border-[#00d4ff] px-3.5 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none font-mono"
-                  />
-                </div>
-
-                <div className="flex justify-end pt-2">
+                {/* REGISTER BUTTON (Electric Blue Brand Color) */}
+                <div className="flex justify-end pt-3">
                   <button
                     type="submit"
                     disabled={regLoading}
-                    className="w-48 py-2.5 px-6 rounded bg-[#0066ff] hover:bg-[#0052cc] text-white font-mono text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-200 disabled:opacity-50 text-center shadow-[0_0_20px_rgba(0,102,255,0.45)] hover:shadow-[0_0_25px_rgba(0,102,255,0.7)]"
+                    className="w-44 py-2.5 px-6 rounded bg-[#0066ff] hover:bg-[#0052cc] text-white font-mono text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-200 disabled:opacity-50 text-center shadow-[0_0_20px_rgba(0,102,255,0.45)] hover:shadow-[0_0_25px_rgba(0,102,255,0.7)]"
                   >
-                    {regLoading ? 'CREATING...' : 'CREATE ACCOUNT'}
+                    {regLoading ? 'STARTING...' : 'REGISTER'}
                   </button>
                 </div>
 
-                <div className="text-right pt-3">
+                {/* Bottom Login Switcher */}
+                <div className="text-right pt-4">
                   <p className="font-mono text-xs sm:text-sm text-gray-400">
                     Already have an account?{' '}
                     <button
                       type="button"
-                      onClick={() => {
-                        setMode('login');
-                        setErrorMsg('');
-                      }}
+                      onClick={() => setMode('login')}
                       className="text-[#00d4ff] hover:text-white underline font-bold tracking-wider ml-1 transition-colors"
                     >
-                      LOGIN HERE
+                      LOGIN HERE!
                     </button>
                   </p>
                 </div>

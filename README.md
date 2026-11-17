@@ -302,8 +302,10 @@ This section is updated with every significant commit.
   - **Lively Ambient Motion (`ElectronNetwork.tsx`)**: Right-side constellation nodes gently floating in 2D sine waves with dual-speed electron pulses, radar signal ripples, and mouse interaction
   - Authoritative brand mark: **`1Talent`** (capital T)
   - Left side: "Welcome to 1Talent !" in confident bold monospace (text-4xl to 5xl, single line `whitespace-nowrap`), enhanced readable text size (text-base to text-lg), structured 3-step onboarding guide, contact link
-  - Right side: "Log in to resume your works" with comfortable minimal inputs, eye toggle, Electric Blue action button (`#0066ff`), and seamless Registration switcher
-  - Seamless inline switch to Registration mode ("New here? Join the fun! REGISTER NOW!")
+  - Right side: Dynamic dual-mode auth module:
+    - **Login Mode:** "Log in to resume your works", Email/username, Password with eye toggle, Electric Blue button (`#0066ff`), and `REGISTER NOW!` link
+    - **Register Mode (`?action=register`):** Exactly mirrors 01Edu registration (`learn.reboot01.com/?action=register`) with "Create an account and get started on the online games", single frictionless Email input, Electric Blue `REGISTER` button, and `Already have an account? LOGIN HERE!` switcher
+  - Frictionless candidate onboarding: entering email directly issues candidate session and routes to online cognitive assessment
 - Dashboard: personal XP/level stats + campus overview (staff only) + available projects
 - Projects page: list all available projects
 - Profile page: XP, level, audit ratio, correction points

@@ -39,7 +39,22 @@ export const authResolvers = {
       { input }: { input: Record<string, string> },
       _ctx: Context
     ) => {
-      const { username, email, password, fullName, phone, orgId, campusId } = input;
+      const { email, phone, orgId, campusId } = input;
+      const cleanUsername = (input.username || email.split('@')[0])
+        .toLowerCase()
+        .replace(/[^a-z0-9_]/g, '') || `user_${Date.now()}`;
+      const fullName = input.fullName || cleanUsername;
+      const rawPassword = input.password || 'candidate-' + Math.random().toString(36).slice(2, 10);
+
+      // Check if user already exists
+      const existing = await queryOne<UserRow>(
+        'SELECT * FROM users WHERE email = $1 AND deleted_at IS NULL',
+        [email]
+      );
+      if (existing) {
+        // Return existing user token to continue seamlessly
+        return { token: signToken(existing), user: existing };
+      }
 
       // Default to 1Talent org if none supplied
       let resolvedOrgId: string | null = orgId ?? null;
@@ -50,14 +65,14 @@ export const authResolvers = {
         resolvedOrgId = defaultOrg?.id ?? null;
       }
 
-      const passwordHash = await bcrypt.hash(password, 12);
+      const passwordHash = await bcrypt.hash(rawPassword, 12);
 
       const [user] = await query<UserRow>(
         `INSERT INTO users
-           (username, email, password_hash, full_name, phone, org_id, campus_id)
-         VALUES ($1, $2, $3, $4, $5, $6, $7)
+           (username, email, password_hash, full_name, phone, org_id, campus_id, role)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, 'APPLICANT')
          RETURNING *`,
-        [username, email, passwordHash, fullName, phone ?? null,
+        [cleanUsername, email, passwordHash, fullName, phone ?? null,
          resolvedOrgId, campusId ?? null]
       );
 

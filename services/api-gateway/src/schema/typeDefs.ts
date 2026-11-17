@@ -305,10 +305,10 @@ export const typeDefs = gql`
 
   # ─── Inputs ───────────────────────────────────────────────
   input RegisterInput {
-    username: String!
     email: String!
-    password: String!
-    fullName: String!
+    username: String
+    password: String
+    fullName: String
     phone: String
     orgId: ID
     campusId: ID
