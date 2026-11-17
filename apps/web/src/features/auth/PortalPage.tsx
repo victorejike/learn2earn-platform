@@ -3,7 +3,6 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useMutation, gql } from '@apollo/client';
 import { Eye, EyeOff } from 'lucide-react';
 import techBgWide from '../../assets/tech-bg-wide.jpg';
-import ElectronNetwork from '../../components/ElectronNetwork';
 
 const LOGIN_MUTATION = gql`
   mutation Login($email: String!, $password: String!) {
@@ -114,7 +113,7 @@ export default function PortalPage() {
     <div className="relative min-h-screen w-full bg-[#030712] text-[#d1d5db] font-mono selection:bg-[#0066ff] selection:text-white flex flex-col justify-between overflow-x-hidden">
       {/* 
         ========================================================================
-        PANORAMIC BLUE TECHNOLOGY BACKGROUND
+        PANORAMIC BLUE TECHNOLOGY BACKGROUND (Clean, Static, High-Definition)
         ========================================================================
       */}
       <div
@@ -124,13 +123,6 @@ export default function PortalPage() {
           filter: 'brightness(1.0) contrast(1.15)',
         }}
       />
-
-      {/* 
-        ========================================================================
-        LIVELY AMBIENT ELECTRONS (Organic floating drift, pulse rings, dual speed)
-        ========================================================================
-      */}
-      <ElectronNetwork />
 
       {/* Smooth left-side dark gradient to ensure pure text contrast */}
       <div className="fixed inset-0 pointer-events-none z-0 bg-gradient-to-r from-[#030712] via-[#030712]/75 to-transparent" />
@@ -216,10 +208,10 @@ export default function PortalPage() {
                 </div>
               )}
 
-              <form onSubmit={handleLogin} className="space-y-5">
+              <form onSubmit={handleLogin} className="space-y-6">
                 {/* Email or username */}
                 <div>
-                  <label className="block font-mono text-sm font-medium text-gray-300 mb-1.5">
+                  <label className="block font-mono text-sm text-gray-400 mb-1">
                     Email or username
                   </label>
                   <input
@@ -228,13 +220,13 @@ export default function PortalPage() {
                     value={emailOrUsername}
                     onChange={(e) => setEmailOrUsername(e.target.value)}
                     placeholder="victorejiki@gmail.com"
-                    className="w-full bg-[#0a1124]/90 border-b border-[#1e293b] focus:border-[#00d4ff] px-3.5 py-3 text-sm sm:text-base text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
+                    className="w-full bg-transparent border-0 border-b border-gray-600 focus:border-[#00d4ff] pb-2 pt-1 text-base text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
                   />
                 </div>
 
                 {/* Password with Eye Toggle */}
                 <div>
-                  <label className="block font-mono text-sm font-medium text-gray-300 mb-1.5">
+                  <label className="block font-mono text-sm text-gray-400 mb-1">
                     Password
                   </label>
                   <div className="relative">
@@ -244,12 +236,12 @@ export default function PortalPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••••••"
-                      className="w-full bg-[#0a1124]/90 border-b border-[#1e293b] focus:border-[#00d4ff] px-3.5 py-3 pr-10 text-sm sm:text-base text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
+                      className="w-full bg-transparent border-0 border-b border-gray-600 focus:border-[#00d4ff] pb-2 pt-1 pr-10 text-base text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#00d4ff] transition-colors p-1"
+                      className="absolute right-1 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#00d4ff] transition-colors p-1"
                       aria-label="Toggle password visibility"
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -307,9 +299,9 @@ export default function PortalPage() {
                 </div>
               )}
 
-              <form onSubmit={handleRegister} className="space-y-5">
+              <form onSubmit={handleRegister} className="space-y-6">
                 <div>
-                  <label className="block font-mono text-sm font-medium text-gray-300 mb-1.5">
+                  <label className="block font-mono text-sm text-gray-400 mb-1">
                     Email
                   </label>
                   <input
@@ -318,7 +310,7 @@ export default function PortalPage() {
                     value={regEmail}
                     onChange={(e) => setRegEmail(e.target.value)}
                     placeholder="victorejiki@gmail.com"
-                    className="w-full bg-[#0a1124]/90 border-b border-[#1e293b] focus:border-[#00d4ff] px-3.5 py-3 text-sm sm:text-base text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
+                    className="w-full bg-transparent border-0 border-b border-gray-600 focus:border-[#00d4ff] pb-2 pt-1 text-base text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
                   />
                 </div>
 

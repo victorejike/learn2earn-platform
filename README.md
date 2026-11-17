@@ -299,12 +299,12 @@ This section is updated with every significant commit.
 **Student portal (React + TypeScript + Tailwind)**
 - **1Talent Entry Portal (`PortalPage.tsx`)**:
   - Seamless feathered blue technology network background (`tech-bg-wide.jpg`, 1920x1080) with 0 seams, zero edge cutoffs, and wide unzoomed perspective
-  - **Lively Ambient Motion (`ElectronNetwork.tsx`)**: Right-side constellation nodes gently floating in 2D sine waves with dual-speed electron pulses, radar signal ripples, and mouse interaction
+  - **Calm, High-Definition Aesthetic**: Moving electron particles removed for a distraction-free, senior UI standard with optimal text legibility and deep contrast
   - Authoritative brand mark: **`1Talent`** (capital T)
   - Left side: "Welcome to 1Talent !" in confident bold monospace (text-4xl to 5xl, single line `whitespace-nowrap`), enhanced readable text size (text-base to text-lg), structured 3-step onboarding guide, contact link
-  - Right side: Dynamic dual-mode auth module:
+  - Right side: Dynamic dual-mode auth module with sleek borderless underline inputs:
     - **Login Mode:** "Log in to resume your works", Email/username, Password with eye toggle, Electric Blue button (`#0066ff`), and `REGISTER NOW!` link
-    - **Register Mode (`?action=register`):** Exactly mirrors 01Edu registration (`learn.reboot01.com/?action=register`) with "Create an account and get started on the online games", single frictionless Email input, Electric Blue `REGISTER` button, and `Already have an account? LOGIN HERE!` switcher
+    - **Register Mode (`?action=register`):** Exactly mirrors 01Edu registration (`learn.reboot01.com/?action=register`) with "Create an account and get started on the online games", single frictionless Email input with sleek underline, right-aligned Electric Blue `REGISTER` button (`#0066ff`), and `Already have an account? LOGIN HERE!` switcher
   - Frictionless candidate onboarding: entering email directly issues candidate session and routes to online cognitive assessment
 - Dashboard: personal XP/level stats + campus overview (staff only) + available projects
 - Projects page: list all available projects
