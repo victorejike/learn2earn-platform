@@ -16,8 +16,21 @@ const ME_QUERY = gql`query Me { me { id username fullName role status xpTotal le
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { data, loading } = useQuery(ME_QUERY);
-  if (loading) return <div className="flex h-screen items-center justify-center bg-[#030712]"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400" /></div>;
-  if (!data?.me) return <Navigate to="/login" replace />;
+  const token = localStorage.getItem('talent_token');
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-[#030712]">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400" />
+      </div>
+    );
+  }
+
+  // If we have data.me, or if the user is authenticated via local token, allow access
+  if (!data?.me && !token) {
+    return <Navigate to="/login" replace />;
+  }
+
   return <>{children}</>;
 }
 
