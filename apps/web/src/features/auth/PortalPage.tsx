@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation, gql } from '@apollo/client';
 import { Eye, EyeOff } from 'lucide-react';
 import techBgWide from '../../assets/tech-bg-wide.jpg';
+import ElectronNetwork from '../../components/ElectronNetwork';
 
 const LOGIN_MUTATION = gql`
   mutation Login($email: String!, $password: String!) {
@@ -107,7 +108,7 @@ export default function PortalPage() {
     <div className="relative min-h-screen w-full bg-[#030712] text-[#d1d5db] font-mono selection:bg-[#0066ff] selection:text-white flex flex-col justify-between overflow-x-hidden">
       {/* 
         ========================================================================
-        BLUE TECHNOLOGY BACKGROUND (Seamless Wide Perspective, Zero Seams)
+        BLUE TECHNOLOGY BACKGROUND (Seamless Wide Perspective)
         ========================================================================
       */}
       <div
@@ -117,12 +118,20 @@ export default function PortalPage() {
           filter: 'brightness(1.0) contrast(1.15)',
         }}
       />
+
+      {/* 
+        ========================================================================
+        LIVELY MOVING ELECTRONS (Active animated pulses cruising across the network)
+        ========================================================================
+      */}
+      <ElectronNetwork />
+
       {/* Subtle left-side dark gradient to guarantee pure text contrast */}
       <div className="fixed inset-0 pointer-events-none z-0 bg-gradient-to-r from-[#030712]/90 via-[#030712]/50 to-transparent" />
 
       {/* 
         ========================================================================
-        TOP-LEFT: 1TALENT BRAND HEADER (No 01, No Platform)
+        TOP-LEFT: 1TALENT BRAND HEADER
         ========================================================================
       */}
       <header className="relative z-10 w-full px-8 sm:px-16 pt-8 pb-4">
@@ -142,8 +151,8 @@ export default function PortalPage() {
         
         {/* LEFT COLUMN */}
         <div className="w-full lg:w-7/12 flex flex-col justify-start">
-          {/* Main Title */}
-          <h1 className="font-mono text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-white mb-8">
+          {/* Main Title - Guaranteed ON ONE LINE via whitespace-nowrap */}
+          <h1 className="font-mono text-3xl sm:text-4xl lg:text-[46px] font-normal tracking-tight text-white mb-8 whitespace-nowrap overflow-visible">
             Welcome to 1talent !
           </h1>
 

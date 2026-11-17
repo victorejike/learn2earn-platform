@@ -299,9 +299,9 @@ This section is updated with every significant commit.
 **Student portal (React + TypeScript + Tailwind)**
 - **1talent Entry Portal (`PortalPage.tsx`)**:
   - Seamless feathered blue technology network background (`tech-bg-wide.jpg`, 1920x1080) with 0 seams, zero edge cutoffs, and wide unzoomed perspective
+  - **Lively Electron Movement (`ElectronNetwork.tsx`)**: Active glowing cyan & electric blue electrons traveling along constellation circuit vectors, with fading comet tails, node arrival sparks, and radial pulse ripples
   - Clean brand header: `1talent` (all references to "01" and "Platform" removed)
-  - 01Edu-accurate 2-column structure matching `learn.reboot01.com`
-  - Left side: "Welcome to 1talent !", 3-step onboarding guide, contact link
+  - Left side: "Welcome to 1talent !" enforced on **one single line** (`whitespace-nowrap`), 3-step onboarding guide, contact link
   - Right side: "Log in to resume your works" with frameless minimal inputs, eye toggle, and electric blue brand action button (`#0066ff`)
   - Seamless inline switch to Registration mode ("New here? Join the fun! REGISTER NOW!")
 - Dashboard: personal XP/level stats + campus overview (staff only) + available projects
