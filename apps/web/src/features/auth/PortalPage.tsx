@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation, useApolloClient, gql } from '@apollo/client';
 import { Eye, EyeOff } from 'lucide-react';
 import techBgWide from '../../assets/tech-bg-wide.jpg';
 
@@ -107,6 +107,7 @@ export default function PortalPage() {
   const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
   const [registeredEmail, setRegisteredEmail] = useState('');
 
+  const apolloClient = useApolloClient();
   const [login, { loading: loginLoading }] = useMutation(LOGIN_MUTATION);
   const [register, { loading: regLoading }] = useMutation(REGISTER_MUTATION);
   const [completeRegistration, { loading: completeLoading }] = useMutation(
@@ -126,6 +127,11 @@ export default function PortalPage() {
 
       if (data?.login?.token) {
         localStorage.setItem('talent_token', data.login.token);
+        try {
+          await apolloClient.resetStore();
+        } catch {
+          // ignore cache reset errors
+        }
         const role = String(data.login.user.role ?? '').toUpperCase();
         if (['APPLICANT', 'PISCINER'].includes(role)) {
           navigate('/intra/learn2earn');
@@ -198,6 +204,9 @@ export default function PortalPage() {
 
       if (data?.completeRegistration?.token) {
         localStorage.setItem('talent_token', data.completeRegistration.token);
+        try {
+          await apolloClient.resetStore();
+        } catch {}
       }
       navigate('/intra/learn2earn');
     } catch {
@@ -234,11 +243,19 @@ export default function PortalPage() {
 
       {/* 
         ========================================================================
-        TOP-LEFT: 1Talent BRAND HEADER (Capital T)
+        TOP-LEFT: 1Talent BRAND HEADER (Dot-Matrix Block Mark + Capital T)
         ========================================================================
       */}
       <header className="relative z-10 w-full px-8 sm:px-16 pt-8 pb-4">
-        <div className="flex items-center gap-2 select-none">
+        <div className="flex items-center gap-3 select-none">
+          <svg width="28" height="24" viewBox="0 0 28 24" fill="currentColor" className="text-white">
+            <rect x="0" y="2" width="4" height="20" fill="currentColor" />
+            <rect x="4" y="2" width="6" height="4" fill="currentColor" />
+            <rect x="4" y="18" width="6" height="4" fill="currentColor" />
+            <rect x="10" y="2" width="4" height="20" fill="currentColor" />
+            <rect x="18" y="2" width="4" height="4" fill="currentColor" />
+            <rect x="22" y="2" width="4" height="20" fill="currentColor" />
+          </svg>
           <span className="font-mono text-2xl sm:text-3xl font-bold tracking-tight text-white">
             <span className="text-[#00d4ff]">1</span>Talent
           </span>

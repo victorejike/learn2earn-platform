@@ -314,9 +314,9 @@ This section is updated with every significant commit.
     - **01Edu Confirmation Email Modal:** When entering email and clicking `REGISTER`, displays the authentic 01Edu confirmation overlay: *"A new confirmation email has been sent to <email>. Please check your inbox within the next 30m and click the verification link to complete your registration."* with centered `OK` button and developer simulation shortcut
     - **Magic Link Profile Completion (`/?email-token=...`):** Triggered after clicking the verification link from email; provides the exact 01Edu profile setup form: First Name, Last Name, Password with toggle, Confirm Password, dynamic real-time criteria checklist (6+ chars, uppercase, lowercase, number, match), right-aligned Electric Blue `REGISTER` button, and transition to `/intra/:campusSlug`
   - **01Edu-Identical Intra Onboarding (`/intra/:campusSlug`, "Tell us more about you")**:
-    - Authentic 01Edu header: 9-dot launcher, `1Talent` wordmark, `DASHBOARD` link, yellow audit ratio badge (`● 1.0`), student handle (`#<username>`), and pixel robot avatar
-    - Large clean monospace heading: `Tell us more about you`
-    - Seamless underline inputs with red `*` markers: Last Name (`Ejike`), First Name (`Victor`), Phone Number (`16160101`), CPR Number / National ID, Gender select dropdown, Date of Birth, City, Country, Highest Education, and Coding Experience
+    - Authentic 01Edu header: 9-dot grid launcher, LED dot-matrix block brand mark (`01` / `1T`), `DASHBOARD` link with home icon, yellow audit ratio badge (`[ ● 1.0 ]`), student handle (`#evictor`), and authentic 01Edu retro CRT goggle-eyed robot avatar (`RebootRobotAvatar`)
+    - Exact layout mirror of `learn.reboot01.com/intra/bahrain`: left-aligned form indented ~100px with matte charcoal `#1e1e21` background and `#141416` top header
+    - Authentic 01Edu input styling: `Ejike` and `Victor` as clean borderless inputs with floating red asterisk `*` at the right margin (no redundant label above), `Phone Number *` (`16160101`), `CPR Number *`, and compact rectangular gender selector box (`[ Select your gender  v ] *`)
     - Electric Blue `CONTINUE` button saving profile and unlocking the timed cognitive assessment at `/assessment`
   - Frictionless candidate onboarding: entering email registers candidate session and initiates assessment pipeline
 - Dashboard: personal XP/level stats + campus overview (staff only) + available projects
