@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, gql } from '@apollo/client';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, ArrowRight, ShieldCheck, Terminal, Cpu } from 'lucide-react';
+import techBg from '../../assets/tech-bg.jpg';
 
 const LOGIN_MUTATION = gql`
   mutation Login($email: String!, $password: String!) {
@@ -45,6 +46,7 @@ export default function PortalPage() {
   const [regUsername, setRegUsername] = useState('');
   const [regEmail, setRegEmail] = useState('');
   const [regPassword, setRegPassword] = useState('');
+  const [regCampus] = useState('learn2earn');
 
   // Status & modal states
   const [errorMsg, setErrorMsg] = useState('');
@@ -74,7 +76,7 @@ export default function PortalPage() {
         }
       }
     } catch (err: unknown) {
-      setErrorMsg(err instanceof Error ? err.message : 'Invalid credentials');
+      setErrorMsg(err instanceof Error ? err.message : 'Invalid username or password');
     }
   };
 
@@ -103,320 +105,430 @@ export default function PortalPage() {
   };
 
   return (
-    <div className="relative min-h-screen w-full bg-[#0d0f15] text-[#e2e4e9] font-mono selection:bg-[#7c3aed] selection:text-white flex flex-col justify-between overflow-x-hidden">
+    <div className="relative min-h-screen w-full bg-[#020617] text-slate-100 flex flex-col justify-between overflow-x-hidden select-text font-sans">
       {/* 
-        Background:
-        Subtle, elegant blue technology network wallpaper anchored softly on the right.
-        Darkened with sophisticated radial and linear gradients so it NEVER interferes with reading.
+        ========================================================================
+        IMMERSIVE BLUE TECHNOLOGY BACKGROUND (Vibrant, Prominent, Lively)
+        ========================================================================
       */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div
-          className="absolute inset-0 bg-cover bg-right sm:bg-[right_center] bg-no-repeat opacity-35"
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        {/* Full-bleed blue tech wallpaper image provided by user */}
+        <img
+          src={techBg}
+          alt="1Talent Technology Network"
+          className="absolute inset-0 w-full h-full object-cover object-center scale-105 transition-transform duration-1000"
           style={{
-            backgroundImage: `url('/assets/tech-bg.jpg')`,
-            filter: 'contrast(1.2) brightness(0.65)',
+            filter: 'brightness(0.9) contrast(1.15) saturate(1.25)',
           }}
         />
-        {/* Dark subtle overlay to blend tech wallpaper seamlessly */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0d0f15] via-[#0d0f15]/90 to-[#0d0f15]/40" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0d0f15]/60 via-transparent to-[#0d0f15]" />
+
+        {/* Dynamic lively ambient pulse glow */}
+        <div className="absolute inset-0 bg-blue-600/10 mix-blend-overlay animate-pulse" style={{ animationDuration: '6s' }} />
+
+        {/* Elegant subtle radial vignette so text is ultra-crisp while blue network shines bright */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(2,6,23,0.45)_0%,rgba(2,6,23,0.85)_80%,rgba(2,6,23,0.95)_100%)]" />
+
+        {/* Subtle cyber grid overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage: `linear-gradient(#38bdf8 1px, transparent 1px), linear-gradient(90deg, #38bdf8 1px, transparent 1px)`,
+            backgroundSize: '40px 40px',
+          }}
+        />
       </div>
 
-      {/* Top Left: Clean Monospace Dot-Matrix Logo (matching 01Edu's 01 placement) */}
-      <header className="relative z-10 w-full px-8 sm:px-14 pt-8 pb-4">
-        <div className="flex items-center gap-2 select-none">
-          {/* Authentic 01Edu-style 01 / 1T pixel glyph */}
-          <div className="flex items-center gap-1.5 px-2 py-1 bg-white/[0.04] border border-white/10 rounded">
-            <span className="font-mono text-xs font-bold tracking-widest text-[#94a3b8]">01</span>
-            <span className="text-[10px] text-[#475569]">/</span>
-            <span className="font-mono text-xs font-bold tracking-wider text-[#38bdf8]">1T</span>
+      {/* 
+        ========================================================================
+        TOP NAVIGATION & 1TALENT BRAND HEADER
+        ========================================================================
+      */}
+      <header className="relative z-10 w-full px-6 sm:px-12 py-6 flex items-center justify-between border-b border-white/10 backdrop-blur-md bg-slate-950/30">
+        <div className="flex items-center gap-3">
+          {/* Custom 1Talent Geometric Cyber Icon */}
+          <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 via-blue-600 to-indigo-600 p-[1.5px] shadow-[0_0_20px_rgba(56,189,248,0.4)]">
+            <div className="w-full h-full bg-[#030712] rounded-[10px] flex items-center justify-center">
+              <span className="font-mono text-base font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
+                1T
+              </span>
+            </div>
           </div>
-          <span className="font-mono text-sm tracking-widest text-[#94a3b8] font-medium">
-            1TALENT
-          </span>
+
+          <div className="flex flex-col">
+            <div className="flex items-center gap-1.5">
+              <span className="text-xl font-bold tracking-tight text-white font-mono">
+                1TALENT
+              </span>
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#38bdf8]" />
+            </div>
+            <span className="text-[10px] uppercase font-mono tracking-widest text-cyan-400/80 -mt-0.5">
+              Engineering Platform
+            </span>
+          </div>
+        </div>
+
+        {/* Campus & Status Indicator */}
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/70 border border-cyan-500/30 backdrop-blur-md text-xs font-mono text-cyan-300">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+            <span className="font-medium">Campus: Learn2Earn</span>
+          </div>
         </div>
       </header>
 
-      {/* Main 01Edu 2-Column Section (No Cards, Direct on Background) */}
-      <main className="relative z-10 flex-1 w-full max-w-7xl mx-auto px-8 sm:px-14 py-8 sm:py-12 flex flex-col lg:flex-row items-start justify-between gap-12 lg:gap-20">
+      {/* 
+        ========================================================================
+        MAIN 2-COLUMN EXPERIENCE (1Talent Unique Identity)
+        ========================================================================
+      */}
+      <main className="relative z-10 flex-1 w-full max-w-7xl mx-auto px-6 sm:px-12 py-12 lg:py-16 flex flex-col lg:flex-row items-center lg:items-center justify-between gap-12 lg:gap-16">
         
-        {/* LEFT COLUMN: 01Edu Authentic Content & Typography */}
-        <div className="w-full lg:w-7/12 flex flex-col justify-start pt-4 lg:pt-8">
-          {/* Welcome title matching 01Edu */}
-          <h1 className="font-mono text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-white mb-8">
-            Welcome to 1Talent !
+        {/* LEFT COLUMN: 1Talent Platform Narrative */}
+        <div className="w-full lg:w-7/12 flex flex-col justify-center">
+          
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-mono font-medium mb-6 w-fit backdrop-blur-sm">
+            <Cpu className="w-3.5 h-3.5 text-cyan-400" />
+            <span>AI-Native Engineering SaaS</span>
+          </div>
+
+          {/* Headline */}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6 leading-[1.1]">
+            Engineering Mastery. <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-400">
+              Built on Real Code.
+            </span>
           </h1>
 
-          {/* Description paragraph */}
-          <p className="font-mono text-[#94a3b8] text-sm sm:text-base leading-relaxed mb-10 max-w-xl">
-            1Talent Platform is our collaborative coding education platform.
+          {/* Description */}
+          <p className="text-slate-300 text-base sm:text-lg leading-relaxed mb-8 max-w-2xl font-normal">
+            <strong className="text-white">1Talent</strong> is a multi-tenant engineering education platform. 
+            Students master software engineering through real-world projects, automated sandbox testing, 
+            and accountable peer-to-peer code reviews across an evolving dependency graph.
           </p>
 
-          {/* 3 Step Onboarding Instructions */}
-          <div className="space-y-6 max-w-xl">
-            <p className="font-mono text-sm text-[#cbd5e1]">
-              New here? Here&apos;s what you need to do:
+          {/* Structured 4-Step Track */}
+          <div className="space-y-3.5 max-w-xl">
+            <p className="text-xs font-mono uppercase tracking-widest text-cyan-400 font-semibold mb-2">
+              The Path to Admission:
             </p>
 
-            <div className="space-y-2.5 font-mono text-sm text-[#cbd5e1] pl-1">
-              <p>1) Create an account, and log into the platform.</p>
-              <p>2) Complete the online cognitive test.</p>
-              <p>3) Wait to find out whether you&apos;ve made it to the next stage.</p>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="p-3.5 rounded-xl bg-slate-900/60 border border-white/10 backdrop-blur-md">
+                <div className="flex items-center gap-2 text-cyan-400 font-mono text-xs font-bold mb-1">
+                  <span>01</span>
+                  <span className="w-1 h-1 rounded-full bg-cyan-400" />
+                  <span>REGISTER</span>
+                </div>
+                <p className="text-xs text-slate-300">Create your developer identity and select your campus.</p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-slate-900/60 border border-white/10 backdrop-blur-md">
+                <div className="flex items-center gap-2 text-cyan-400 font-mono text-xs font-bold mb-1">
+                  <span>02</span>
+                  <span className="w-1 h-1 rounded-full bg-cyan-400" />
+                  <span>ASSESSMENT</span>
+                </div>
+                <p className="text-xs text-slate-300">Complete the 60-minute timed logic &amp; cognitive test.</p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-slate-900/60 border border-white/10 backdrop-blur-md">
+                <div className="flex items-center gap-2 text-cyan-400 font-mono text-xs font-bold mb-1">
+                  <span>03</span>
+                  <span className="w-1 h-1 rounded-full bg-cyan-400" />
+                  <span>THE PISCINE</span>
+                </div>
+                <p className="text-xs text-slate-300">Qualify for the intensive 4-week selection bootcamp.</p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-slate-900/60 border border-white/10 backdrop-blur-md">
+                <div className="flex items-center gap-2 text-cyan-400 font-mono text-xs font-bold mb-1">
+                  <span>04</span>
+                  <span className="w-1 h-1 rounded-full bg-cyan-400" />
+                  <span>THE GRAPH</span>
+                </div>
+                <p className="text-xs text-slate-300">Unlock project nodes, audit peers, and earn your degree.</p>
+              </div>
             </div>
-
-            <p className="font-mono text-sm text-[#94a3b8] pt-4 leading-relaxed">
-              That&apos;s it! If you&apos;ve already created an account, sign in to complete your application or check for updates
-            </p>
           </div>
         </div>
 
-        {/* RIGHT COLUMN: 01Edu Authentic Login Form (NO CARD CONTAINER) */}
-        <div className="w-full lg:w-5/12 max-w-md pt-4 lg:pt-8">
-          {mode === 'login' ? (
-            <div>
-              {/* Header: Exact 01Edu lavender/purple monospace title */}
-              <h2 className="font-mono text-2xl sm:text-[26px] font-normal tracking-wide text-[#b895ff] mb-6">
-                Log in to resume your works
-              </h2>
-
-              {errorMsg && (
-                <div className="mb-4 text-xs font-mono text-red-400 bg-red-950/30 border-l-2 border-red-500 px-3 py-2">
-                  {errorMsg}
-                </div>
-              )}
-
-              <form onSubmit={handleLogin} className="space-y-5">
-                {/* Email or username */}
-                <div>
-                  <label className="block font-mono text-sm text-[#94a3b8] mb-1.5">
-                    Email or username
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={emailOrUsername}
-                    onChange={(e) => setEmailOrUsername(e.target.value)}
-                    placeholder="victorejiki@gmail.com"
-                    className="w-full bg-[#161a23] border-b border-[#334155] focus:border-[#a855f7] px-3.5 py-2.5 text-sm text-white placeholder-[#475569] focus:outline-none transition-colors font-mono"
-                  />
-                </div>
-
-                {/* Password with Eye Toggle */}
-                <div>
-                  <label className="block font-mono text-sm text-[#94a3b8] mb-1.5">
-                    Password
-                  </label>
-                  <div className="relative">
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      required
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="••••••••••••"
-                      className="w-full bg-[#161a23] border-b border-[#334155] focus:border-[#a855f7] px-3.5 py-2.5 pr-10 text-sm text-white placeholder-[#475569] focus:outline-none transition-colors font-mono"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-[#64748b] hover:text-[#cbd5e1] transition-colors"
-                      aria-label="Toggle password visibility"
-                    >
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </button>
+        {/* RIGHT COLUMN: Frameless Clean Authentication Form */}
+        <div className="w-full lg:w-5/12 max-w-md">
+          <div className="p-8 sm:p-10 rounded-2xl bg-slate-950/60 border border-white/10 backdrop-blur-xl shadow-[0_0_50px_rgba(2,6,23,0.8)]">
+            {mode === 'login' ? (
+              <div>
+                <div className="mb-6">
+                  <div className="flex items-center gap-2 text-cyan-400 font-mono text-xs font-semibold uppercase tracking-wider mb-1">
+                    <Terminal className="w-4 h-4" />
+                    <span>Workspace Access</span>
                   </div>
-                </div>
-
-                {/* Forgot password */}
-                <div className="text-right pt-1">
-                  <button
-                    type="button"
-                    onClick={() => setForgotModalOpen(true)}
-                    className="font-mono text-xs text-[#94a3b8] hover:text-[#e2e4e9] transition-colors"
-                  >
-                    Forgot password? <span className="underline">Click here!</span>
-                  </button>
-                </div>
-
-                {/* 01Edu Signature Purple Action Button */}
-                <div className="pt-2">
-                  <button
-                    type="submit"
-                    disabled={loginLoading}
-                    className="w-full py-2.5 px-6 rounded bg-[#8b5cf6] hover:bg-[#7c3aed] text-white font-mono text-sm font-semibold uppercase tracking-wider transition-colors disabled:opacity-50"
-                  >
-                    {loginLoading ? 'LOGGING IN...' : 'LOGIN'}
-                  </button>
-                </div>
-
-                {/* Bottom Register Prompt matching 01Edu */}
-                <div className="text-right pt-4">
-                  <p className="font-mono text-xs text-[#94a3b8]">
-                    New here? Join the fun!{' '}
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setMode('register');
-                        setErrorMsg('');
-                      }}
-                      className="text-[#b895ff] hover:text-white underline font-semibold ml-1 transition-colors"
-                    >
-                      REGISTER NOW!
-                    </button>
+                  <h2 className="text-2xl font-bold text-white tracking-tight">
+                    Sign in to 1Talent
+                  </h2>
+                  <p className="text-xs text-slate-400 mt-1">
+                    Enter your credentials to access your terminal &amp; projects.
                   </p>
                 </div>
-              </form>
-            </div>
-          ) : (
-            <div>
-              {/* Register Mode */}
-              <h2 className="font-mono text-2xl sm:text-[26px] font-normal tracking-wide text-[#38bdf8] mb-6">
-                Register to 1Talent
-              </h2>
 
-              {errorMsg && (
-                <div className="mb-4 text-xs font-mono text-red-400 bg-red-950/30 border-l-2 border-red-500 px-3 py-2">
-                  {errorMsg}
-                </div>
-              )}
+                {errorMsg && (
+                  <div className="mb-4 text-xs font-mono text-red-300 bg-red-950/50 border border-red-500/30 rounded px-3 py-2">
+                    {errorMsg}
+                  </div>
+                )}
 
-              <form onSubmit={handleRegister} className="space-y-4">
-                <div>
-                  <label className="block font-mono text-xs text-[#94a3b8] mb-1">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={regFullName}
-                    onChange={(e) => setRegFullName(e.target.value)}
-                    placeholder="Victor Ejike"
-                    className="w-full bg-[#161a23] border-b border-[#334155] focus:border-[#38bdf8] px-3 py-2 text-sm text-white placeholder-[#475569] focus:outline-none font-mono"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
+                <form onSubmit={handleLogin} className="space-y-4">
+                  {/* Email or Username */}
                   <div>
-                    <label className="block font-mono text-xs text-[#94a3b8] mb-1">
-                      Username
+                    <label className="block text-xs font-mono text-slate-300 mb-1.5">
+                      Email or Username
                     </label>
                     <input
                       type="text"
                       required
-                      value={regUsername}
-                      onChange={(e) => setRegUsername(e.target.value)}
-                      placeholder="victor"
-                      className="w-full bg-[#161a23] border-b border-[#334155] focus:border-[#38bdf8] px-3 py-2 text-sm text-white placeholder-[#475569] focus:outline-none font-mono"
+                      value={emailOrUsername}
+                      onChange={(e) => setEmailOrUsername(e.target.value)}
+                      placeholder="victorejiki@gmail.com"
+                      className="w-full bg-slate-900/80 border border-slate-700 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/30 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none transition-all font-mono"
                     />
                   </div>
+
+                  {/* Password with Eye Toggle */}
                   <div>
-                    <label className="block font-mono text-xs text-[#94a3b8] mb-1">
-                      Campus
+                    <label className="block text-xs font-mono text-slate-300 mb-1.5">
+                      Password
                     </label>
-                    <div className="px-3 py-2 bg-[#161a23] border-b border-[#334155] text-xs text-[#38bdf8] font-mono">
-                      Learn2Earn
+                    <div className="relative">
+                      <input
+                        type={showPassword ? 'text' : 'password'}
+                        required
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="••••••••••••"
+                        className="w-full bg-slate-900/80 border border-slate-700 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/30 rounded-lg px-4 py-2.5 pr-10 text-sm text-white placeholder-slate-500 focus:outline-none transition-all font-mono"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-cyan-300 transition-colors p-1"
+                        aria-label="Toggle password visibility"
+                      >
+                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </button>
                     </div>
                   </div>
-                </div>
 
-                <div>
-                  <label className="block font-mono text-xs text-[#94a3b8] mb-1">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={regEmail}
-                    onChange={(e) => setRegEmail(e.target.value)}
-                    placeholder="victorejiki@gmail.com"
-                    className="w-full bg-[#161a23] border-b border-[#334155] focus:border-[#38bdf8] px-3 py-2 text-sm text-white placeholder-[#475569] focus:outline-none font-mono"
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-mono text-xs text-[#94a3b8] mb-1">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    required
-                    value={regPassword}
-                    onChange={(e) => setRegPassword(e.target.value)}
-                    placeholder="••••••••••••"
-                    className="w-full bg-[#161a23] border-b border-[#334155] focus:border-[#38bdf8] px-3 py-2 text-sm text-white placeholder-[#475569] focus:outline-none font-mono"
-                  />
-                </div>
-
-                <div className="pt-2">
-                  <button
-                    type="submit"
-                    disabled={regLoading}
-                    className="w-full py-2.5 px-6 rounded bg-[#0284c7] hover:bg-[#0369a1] text-white font-mono text-sm font-semibold uppercase tracking-wider transition-colors disabled:opacity-50"
-                  >
-                    {regLoading ? 'CREATING...' : 'CREATE ACCOUNT'}
-                  </button>
-                </div>
-
-                <div className="text-right pt-3">
-                  <p className="font-mono text-xs text-[#94a3b8]">
-                    Already have an account?{' '}
+                  {/* Forgot Password Link */}
+                  <div className="text-right pt-0.5">
                     <button
                       type="button"
-                      onClick={() => {
-                        setMode('login');
-                        setErrorMsg('');
-                      }}
-                      className="text-[#38bdf8] hover:text-white underline font-semibold ml-1 transition-colors"
+                      onClick={() => setForgotModalOpen(true)}
+                      className="text-xs text-slate-400 hover:text-cyan-300 transition-colors"
                     >
-                      LOGIN HERE
+                      Forgot password?
                     </button>
+                  </div>
+
+                  {/* Submit Button */}
+                  <div className="pt-2">
+                    <button
+                      type="submit"
+                      disabled={loginLoading}
+                      className="w-full py-3 px-6 rounded-lg bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white text-sm font-semibold tracking-wide transition-all duration-200 shadow-[0_0_25px_rgba(56,189,248,0.3)] hover:shadow-[0_0_30px_rgba(56,189,248,0.5)] disabled:opacity-50 flex items-center justify-center gap-2"
+                    >
+                      {loginLoading ? (
+                        <span>AUTHENTICATING...</span>
+                      ) : (
+                        <span className="flex items-center gap-2">
+                          SIGN IN <ArrowRight className="w-4 h-4" />
+                        </span>
+                      )}
+                    </button>
+                  </div>
+
+                  {/* Switch to Register */}
+                  <div className="pt-4 text-center border-t border-white/10">
+                    <p className="text-xs text-slate-400">
+                      New to 1Talent?{' '}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setMode('register');
+                          setErrorMsg('');
+                        }}
+                        className="text-cyan-400 hover:text-cyan-300 font-semibold underline ml-1 transition-colors"
+                      >
+                        Apply for Admission
+                      </button>
+                    </p>
+                  </div>
+                </form>
+              </div>
+            ) : (
+              <div>
+                <div className="mb-6">
+                  <div className="flex items-center gap-2 text-cyan-400 font-mono text-xs font-semibold uppercase tracking-wider mb-1">
+                    <ShieldCheck className="w-4 h-4" />
+                    <span>Candidate Registration</span>
+                  </div>
+                  <h2 className="text-2xl font-bold text-white tracking-tight">
+                    Apply to 1Talent
+                  </h2>
+                  <p className="text-xs text-slate-400 mt-1">
+                    Campus: Learn2Earn. No prior degree required.
                   </p>
                 </div>
-              </form>
-            </div>
-          )}
+
+                {errorMsg && (
+                  <div className="mb-4 text-xs font-mono text-red-300 bg-red-950/50 border border-red-500/30 rounded px-3 py-2">
+                    {errorMsg}
+                  </div>
+                )}
+
+                <form onSubmit={handleRegister} className="space-y-3.5">
+                  <div>
+                    <label className="block text-xs font-mono text-slate-300 mb-1">
+                      Full Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={regFullName}
+                      onChange={(e) => setRegFullName(e.target.value)}
+                      placeholder="Victor Ejike"
+                      className="w-full bg-slate-900/80 border border-slate-700 focus:border-cyan-400 rounded-lg px-3.5 py-2 text-sm text-white focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-mono text-slate-300 mb-1">
+                        Username
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={regUsername}
+                        onChange={(e) => setRegUsername(e.target.value)}
+                        placeholder="victor"
+                        className="w-full bg-slate-900/80 border border-slate-700 focus:border-cyan-400 rounded-lg px-3.5 py-2 text-sm text-white focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-mono text-slate-300 mb-1">
+                        Campus
+                      </label>
+                      <div className="px-3 py-2 bg-slate-900/80 border border-slate-700 rounded-lg text-xs font-mono text-cyan-400">
+                        {regCampus}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-mono text-slate-300 mb-1">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={regEmail}
+                      onChange={(e) => setRegEmail(e.target.value)}
+                      placeholder="victorejiki@gmail.com"
+                      className="w-full bg-slate-900/80 border border-slate-700 focus:border-cyan-400 rounded-lg px-3.5 py-2 text-sm text-white focus:outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-mono text-slate-300 mb-1">
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      required
+                      value={regPassword}
+                      onChange={(e) => setRegPassword(e.target.value)}
+                      placeholder="Min 8 characters"
+                      className="w-full bg-slate-900/80 border border-slate-700 focus:border-cyan-400 rounded-lg px-3.5 py-2 text-sm text-white focus:outline-none"
+                    />
+                  </div>
+
+                  <div className="pt-2">
+                    <button
+                      type="submit"
+                      disabled={regLoading}
+                      className="w-full py-3 px-6 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white text-sm font-semibold tracking-wide transition-all shadow-[0_0_20px_rgba(56,189,248,0.4)] disabled:opacity-50"
+                    >
+                      {regLoading ? 'CREATING ACCOUNT...' : 'START COGNITIVE ASSESSMENT'}
+                    </button>
+                  </div>
+
+                  <div className="pt-3 text-center border-t border-white/10">
+                    <p className="text-xs text-slate-400">
+                      Already registered?{' '}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setMode('login');
+                          setErrorMsg('');
+                        }}
+                        className="text-cyan-400 hover:text-cyan-300 font-semibold underline ml-1"
+                      >
+                        Sign in here
+                      </button>
+                    </p>
+                  </div>
+                </form>
+              </div>
+            )}
+          </div>
         </div>
       </main>
 
       {/* Forgot Password Dialog */}
       {forgotModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4">
-          <div className="w-full max-w-sm bg-[#12151d] border border-white/10 rounded-lg p-6 space-y-4 font-mono">
-            <h3 className="text-base font-medium text-white">Reset Password</h3>
-            <p className="text-xs text-[#94a3b8] leading-relaxed">
-              Enter your email address and we&apos;ll send instructions to reset your password.
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
+          <div className="w-full max-w-sm bg-slate-900 border border-cyan-500/30 rounded-xl p-6 space-y-4 shadow-2xl">
+            <h3 className="text-base font-bold text-white">Reset Password</h3>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Enter your registered email address and we will dispatch a secure recovery token to your inbox.
             </p>
             <input
               type="email"
               placeholder="victorejiki@gmail.com"
-              className="w-full bg-[#1a1f2c] border border-white/10 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-[#8b5cf6]"
+              className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-400 font-mono"
             />
-            <div className="flex justify-end gap-3 pt-2 text-xs">
+            <div className="flex justify-end gap-3 pt-2 text-xs font-mono">
               <button
                 type="button"
                 onClick={() => setForgotModalOpen(false)}
-                className="px-3 py-1.5 text-[#94a3b8] hover:text-white"
+                className="px-3 py-1.5 text-slate-400 hover:text-white"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={() => {
-                  alert('Reset link sent to your email.');
+                  alert('Reset link sent to your registered email address.');
                   setForgotModalOpen(false);
                 }}
-                className="px-4 py-1.5 rounded bg-[#8b5cf6] text-white font-medium hover:bg-[#7c3aed]"
+                className="px-4 py-1.5 rounded-lg bg-cyan-500 text-slate-950 font-bold hover:bg-cyan-400"
               >
-                Send Reset Link
+                Send Link
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Discreet bottom footer */}
-      <footer className="relative z-10 w-full px-8 sm:px-14 py-4 text-xs font-mono text-[#475569] flex justify-between items-center">
-        <span>1Talent • Campus Learn2Earn</span>
-        <span>Peer-to-Peer Engineering</span>
+      {/* Footer */}
+      <footer className="relative z-10 w-full px-6 sm:px-12 py-4 border-t border-white/10 backdrop-blur-md bg-slate-950/30 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400 font-mono">
+        <div>
+          <span>© {new Date().getFullYear()} 1Talent Platform. All rights reserved.</span>
+        </div>
+        <div className="flex items-center gap-6">
+          <span>Peer-Reviewed DAG Curriculum</span>
+          <span>Automated Sandbox</span>
+          <span>Campus: Learn2Earn</span>
+        </div>
       </footer>
     </div>
   );
