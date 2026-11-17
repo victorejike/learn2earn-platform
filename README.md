@@ -306,6 +306,7 @@ This section is updated with every significant commit.
     - **Login Mode:** "Log in to resume your works", Email/username, Password with eye toggle, Electric Blue button (`#0066ff`), and `REGISTER NOW!` link
     - **Register Mode (`?action=register`):** Exactly mirrors 01Edu registration (`learn.reboot01.com/?action=register`) with "Create an account and get started on the online games", single frictionless Email input with sleek underline, right-aligned Electric Blue `REGISTER` button (`#0066ff`), and `Already have an account? LOGIN HERE!` switcher
     - **01Edu Confirmation Email Modal:** When entering email and clicking `REGISTER`, displays the authentic 01Edu confirmation overlay: *"A new confirmation email has been sent to <email>. Please check your inbox within the next 30m and click the verification link to complete your registration."* with centered `OK` button and developer simulation shortcut
+    - **Magic Link Profile Completion (`/?email-token=...`):** Triggered after clicking the verification link from email; provides the exact 01Edu profile setup form: First Name, Last Name, Password with toggle, Confirm Password, dynamic real-time criteria checklist (6+ chars, uppercase, lowercase, number, match), right-aligned Electric Blue `REGISTER` button, and direct transition to `/assessment`
   - Frictionless candidate onboarding: entering email registers candidate session and initiates assessment pipeline
 - Dashboard: personal XP/level stats + campus overview (staff only) + available projects
 - Projects page: list all available projects

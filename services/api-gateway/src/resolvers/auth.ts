@@ -79,6 +79,75 @@ export const authResolvers = {
       return { token: signToken(user), user };
     },
 
+    completeRegistration: async (
+      _: unknown,
+      { input }: { input: { emailToken?: string; email?: string; firstName: string; lastName: string; password: string } },
+      ctx: Context
+    ) => {
+      const { emailToken, email, firstName, lastName, password } = input;
+      const fullName = `${firstName.trim()} ${lastName.trim()}`.trim();
+      const passwordHash = await bcrypt.hash(password, 12);
+
+      let targetUserId: string | null = null;
+      let targetEmail: string | null = email?.trim().toLowerCase() ?? null;
+
+      if (emailToken) {
+        try {
+          const secret = process.env.JWT_SECRET ?? 'dev-secret';
+          const decoded = jwt.verify(emailToken, secret) as { userId?: string; email?: string };
+          targetUserId = decoded.userId ?? null;
+          if (decoded.email) targetEmail = decoded.email;
+        } catch {
+          // Token may be dev token or client-side placeholder; fall through to email / context
+        }
+      }
+
+      if (!targetUserId && ctx.user?.userId) {
+        targetUserId = ctx.user.userId;
+      }
+
+      let user: UserRow | null = null;
+
+      if (targetUserId) {
+        user = await queryOne<UserRow>(
+          `UPDATE users
+           SET full_name = $1, password_hash = $2, last_active_at = NOW()
+           WHERE id = $3 AND deleted_at IS NULL
+           RETURNING *`,
+          [fullName, passwordHash, targetUserId]
+        );
+      } else if (targetEmail) {
+        user = await queryOne<UserRow>(
+          `UPDATE users
+           SET full_name = $1, password_hash = $2, last_active_at = NOW()
+           WHERE email = $3 AND deleted_at IS NULL
+           RETURNING *`,
+          [fullName, passwordHash, targetEmail]
+        );
+
+        if (!user) {
+          const cleanUsername = targetEmail.split('@')[0].replace(/[^a-zA-Z0-9_]/g, '_').slice(0, 30);
+          const defaultOrg = await queryOne<{ id: string }>(
+            "SELECT id FROM organizations WHERE slug = '1talent'"
+          );
+          const [newUser] = await query<UserRow>(
+            `INSERT INTO users
+               (username, email, password_hash, full_name, org_id, role)
+             VALUES ($1, $2, $3, $4, $5, 'APPLICANT')
+             RETURNING *`,
+            [cleanUsername, targetEmail, passwordHash, fullName, defaultOrg?.id ?? null]
+          );
+          user = newUser;
+        }
+      }
+
+      if (!user) {
+        throw new Error('Registration token is invalid or expired. Please re-enter your email.');
+      }
+
+      return { token: signToken(user), user };
+    },
+
     login: async (
       _: unknown,
       { email, password, orgSlug }: { email: string; password: string; orgSlug?: string }

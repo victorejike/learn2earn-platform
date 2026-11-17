@@ -273,6 +273,7 @@ export const typeDefs = gql`
   type Mutation {
     # Auth
     register(input: RegisterInput!): AuthPayload!
+    completeRegistration(input: CompleteRegistrationInput!): AuthPayload!
     login(email: String!, password: String!, orgSlug: String): AuthPayload!
 
     # Admissions
@@ -312,6 +313,14 @@ export const typeDefs = gql`
     phone: String
     orgId: ID
     campusId: ID
+  }
+
+  input CompleteRegistrationInput {
+    emailToken: String
+    email: String
+    firstName: String!
+    lastName: String!
+    password: String!
   }
 
   input SubmitAdmissionApplicationInput {

@@ -32,28 +32,74 @@ const REGISTER_MUTATION = gql`
   }
 `;
 
+const COMPLETE_REGISTRATION_MUTATION = gql`
+  mutation CompleteRegistration($input: CompleteRegistrationInput!) {
+    completeRegistration(input: $input) {
+      token
+      user {
+        id
+        username
+        fullName
+        role
+        status
+      }
+    }
+  }
+`;
+
 export default function PortalPage() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Support ?action=register matching 01Edu URL behavior
-  const mode = searchParams.get('action') === 'register' ? 'register' : 'login';
-  const setMode = (newMode: 'login' | 'register') => {
+  // Support ?email-token=... and ?action=register / login
+  const emailToken = searchParams.get('email-token') || searchParams.get('token');
+  const actionParam = searchParams.get('action');
+
+  let mode: 'login' | 'register' | 'complete-profile' = 'login';
+  if (emailToken || actionParam === 'complete-profile') {
+    mode = 'complete-profile';
+  } else if (actionParam === 'register') {
+    mode = 'register';
+  }
+
+  const setMode = (newMode: 'login' | 'register' | 'complete-profile') => {
     if (newMode === 'register') {
       setSearchParams({ action: 'register' });
+    } else if (newMode === 'complete-profile') {
+      setSearchParams({ action: 'complete-profile' });
     } else {
       setSearchParams({});
     }
     setErrorMsg('');
   };
 
-  // Form states
+  // Login form states
   const [emailOrUsername, setEmailOrUsername] = useState('victorejiki@gmail.com');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   // Register form single-email state (matches 01Edu 1-field registration)
   const [regEmail, setRegEmail] = useState('victorejiki@gmail.com');
+
+  // Complete profile form states (matches 01Edu magic-link profile completion)
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [profilePassword, setProfilePassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showProfilePassword, setShowProfilePassword] = useState(false);
+
+  // Password validation checklist
+  const hasMinLength = profilePassword.length >= 6;
+  const hasLowerCase = /[a-z]/.test(profilePassword);
+  const hasUpperCase = /[A-Z]/.test(profilePassword);
+  const hasNumber = /[0-9]/.test(profilePassword);
+  const passwordsMatch = confirmPassword.length > 0 && confirmPassword === profilePassword;
+  const isPasswordValid = hasMinLength && hasLowerCase && hasUpperCase && hasNumber;
+  const canSubmitProfile =
+    firstName.trim().length > 0 &&
+    lastName.trim().length > 0 &&
+    isPasswordValid &&
+    passwordsMatch;
 
   // Status & modal states
   const [errorMsg, setErrorMsg] = useState('');
@@ -63,6 +109,9 @@ export default function PortalPage() {
 
   const [login, { loading: loginLoading }] = useMutation(LOGIN_MUTATION);
   const [register, { loading: regLoading }] = useMutation(REGISTER_MUTATION);
+  const [completeRegistration, { loading: completeLoading }] = useMutation(
+    COMPLETE_REGISTRATION_MUTATION
+  );
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,6 +162,33 @@ export default function PortalPage() {
       // In preview or demo mode, ensure candidate sees authentic confirmation modal
       setRegisteredEmail(targetEmail);
       setConfirmationModalOpen(true);
+    }
+  };
+
+  const handleCompleteRegistration = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!canSubmitProfile) return;
+    setErrorMsg('');
+    try {
+      const { data } = await completeRegistration({
+        variables: {
+          input: {
+            emailToken: emailToken || undefined,
+            email: registeredEmail || regEmail || undefined,
+            firstName: firstName.trim(),
+            lastName: lastName.trim(),
+            password: profilePassword,
+          },
+        },
+      });
+
+      if (data?.completeRegistration?.token) {
+        localStorage.setItem('talent_token', data.completeRegistration.token);
+      }
+      navigate('/assessment');
+    } catch {
+      // In demo mode or offline mode, navigate candidate directly to assessment games
+      navigate('/assessment');
     }
   };
 
@@ -200,9 +276,141 @@ export default function PortalPage() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: DYNAMIC AUTH (LOGIN OR REGISTER MATCHING 01EDU) */}
+        {/* RIGHT COLUMN: DYNAMIC AUTH (LOGIN, REGISTER, OR COMPLETE PROFILE) */}
         <div className="w-full lg:w-5/12 max-w-md">
-          {mode === 'login' ? (
+          {mode === 'complete-profile' ? (
+            <div>
+              {/* Profile Completion Mode - Exact 01Edu Structure from Magic Link */}
+              <h2 className="font-mono text-2xl sm:text-3xl font-normal tracking-wide text-[#b895ff] mb-6 leading-snug">
+                Create an account and get started on the online games
+              </h2>
+
+              {errorMsg && (
+                <div className="mb-4 text-xs font-mono text-red-400 bg-black/60 border-l-2 border-red-500 px-3 py-2">
+                  {errorMsg}
+                </div>
+              )}
+
+              <form onSubmit={handleCompleteRegistration} className="space-y-5">
+                {/* First Name */}
+                <div>
+                  <label className="block font-mono text-sm text-gray-400 mb-1">
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    placeholder="Victor"
+                    className="w-full bg-transparent border-0 border-b border-gray-600 focus:border-[#00d4ff] pb-2 pt-1 text-base text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
+                  />
+                </div>
+
+                {/* Last Name */}
+                <div>
+                  <label className="block font-mono text-sm text-gray-400 mb-1">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    placeholder="Ejike"
+                    className="w-full bg-transparent border-0 border-b border-gray-600 focus:border-[#00d4ff] pb-2 pt-1 text-base text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
+                  />
+                </div>
+
+                {/* Password with Eye Toggle */}
+                <div>
+                  <label className="block font-mono text-sm text-gray-400 mb-1">
+                    Password
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showProfilePassword ? 'text' : 'password'}
+                      required
+                      value={profilePassword}
+                      onChange={(e) => setProfilePassword(e.target.value)}
+                      placeholder="••••••••••••"
+                      className="w-full bg-transparent border-0 border-b border-gray-600 focus:border-[#00d4ff] pb-2 pt-1 pr-10 text-base text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowProfilePassword(!showProfilePassword)}
+                      className="absolute right-1 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#00d4ff] transition-colors p-1"
+                      aria-label="Toggle password visibility"
+                    >
+                      {showProfilePassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Confirm Password */}
+                <div>
+                  <label className="block font-mono text-sm text-gray-400 mb-1">
+                    Confirm Password
+                  </label>
+                  <input
+                    type={showProfilePassword ? 'text' : 'password'}
+                    required
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="••••••••••••"
+                    className="w-full bg-transparent border-0 border-b border-gray-600 focus:border-[#00d4ff] pb-2 pt-1 text-base text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
+                  />
+                </div>
+
+                {/* Password Criteria Checklist - Mirrors Screenshot exactly */}
+                <div className="pt-1 space-y-1 font-mono text-xs text-left">
+                  <p className="text-gray-400">Password must contain:</p>
+                  <p className={hasMinLength ? "text-emerald-400 flex items-center gap-1.5" : "text-[#f87171] flex items-center gap-1.5"}>
+                    <span>-</span> At least 6 characters
+                  </p>
+                  <p className={hasLowerCase ? "text-emerald-400 flex items-center gap-1.5" : "text-[#f87171] flex items-center gap-1.5"}>
+                    <span>-</span> A lower case letter
+                  </p>
+                  <p className={hasUpperCase ? "text-emerald-400 flex items-center gap-1.5" : "text-[#f87171] flex items-center gap-1.5"}>
+                    <span>-</span> An upper case letter
+                  </p>
+                  <p className={hasNumber ? "text-emerald-400 flex items-center gap-1.5" : "text-[#f87171] flex items-center gap-1.5"}>
+                    <span>-</span> A number
+                  </p>
+                  {confirmPassword.length > 0 && !passwordsMatch && (
+                    <p className="text-[#f87171] flex items-center gap-1.5">
+                      <span>-</span> Passwords must match
+                    </p>
+                  )}
+                </div>
+
+                {/* REGISTER BUTTON (Electric Blue Brand Color) */}
+                <div className="flex justify-end pt-3">
+                  <button
+                    type="submit"
+                    disabled={!canSubmitProfile || completeLoading}
+                    className="w-44 py-2.5 px-6 rounded bg-[#0066ff] hover:bg-[#0052cc] text-white font-mono text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed text-center shadow-[0_0_20px_rgba(0,102,255,0.45)] hover:shadow-[0_0_25px_rgba(0,102,255,0.7)]"
+                  >
+                    {completeLoading ? 'SAVING...' : 'REGISTER'}
+                  </button>
+                </div>
+
+                {/* Bottom Login Switcher */}
+                <div className="text-right pt-4">
+                  <p className="font-mono text-xs sm:text-sm text-gray-400">
+                    Already have an account?{' '}
+                    <button
+                      type="button"
+                      onClick={() => setMode('login')}
+                      className="text-[#00d4ff] hover:text-white underline font-bold tracking-wider ml-1 transition-colors"
+                    >
+                      LOGIN HERE!
+                    </button>
+                  </p>
+                </div>
+              </form>
+            </div>
+          ) : mode === 'login' ? (
             <div>
               {/* Header */}
               <h2 className="font-mono text-2xl sm:text-3xl font-normal tracking-wide text-[#38bdf8] mb-6">
@@ -417,11 +625,11 @@ export default function PortalPage() {
                 type="button"
                 onClick={() => {
                   setConfirmationModalOpen(false);
-                  navigate('/assessment');
+                  setSearchParams({ 'email-token': 'demo-verified-token' });
                 }}
-                className="text-xs font-mono text-gray-500 hover:text-[#00d4ff] underline pt-2 transition-colors"
+                className="text-xs font-mono text-[#00d4ff] hover:underline pt-2 transition-colors cursor-pointer"
               >
-                ⚡ Dev Demo: Click to simulate email link & enter test →
+                ⚡ Dev Demo: Click magic link to complete profile →
               </button>
             </div>
           </div>
