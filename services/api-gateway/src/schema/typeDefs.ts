@@ -12,6 +12,7 @@ export const typeDefs = gql`
     CAMPUS_STAFF
     HEAD_OF_CAMPUS
     ADMIN
+    SUPER_ADMIN
   }
 
   enum UserStatus {
@@ -33,6 +34,34 @@ export const typeDefs = gql`
     IN_REVIEW
     PASSED
     FAILED
+  }
+
+  enum AdmissionApplicationStatus {
+    SUBMITTED
+    UNDER_REVIEW
+    INVITED
+    ASSESSMENT_IN_PROGRESS
+    ASSESSMENT_SUBMITTED
+    ACCEPTED
+    REJECTED
+  }
+
+  enum AdmissionTestStatus {
+    INVITED
+    IN_PROGRESS
+    SUBMITTED
+    EXPIRED
+  }
+
+  enum AdmissionQuestionType {
+    SINGLE_CHOICE
+    MULTIPLE_CHOICE
+    BOOLEAN
+  }
+
+  enum AdmissionReviewDecision {
+    INVITE
+    REJECT
   }
 
   # ─── Types ────────────────────────────────────────────────
@@ -87,6 +116,7 @@ export const typeDefs = gql`
     lastActiveAt: DateTime
     createdAt: DateTime!
     organization: Organization
+    campus: Campus
   }
 
   type AuthPayload {
@@ -138,10 +168,81 @@ export const typeDefs = gql`
     activeCohorts: Int!
   }
 
+  type AdmissionApplication {
+    id: ID!
+    reference: String!
+    user: User!
+    campus: Campus
+    status: AdmissionApplicationStatus!
+    dateOfBirth: String!
+    country: String!
+    city: String!
+    highestEducation: String!
+    codingExperience: String!
+    motivation: String!
+    availability: String!
+    referralSource: String
+    reviewNotes: String
+    reviewedAt: DateTime
+    submittedAt: DateTime!
+    createdAt: DateTime!
+  }
+
+  type AdmissionQuestionOption {
+    value: String!
+    label: String!
+  }
+
+  type AdmissionQuestion {
+    id: ID!
+    prompt: String!
+    type: AdmissionQuestionType!
+    options: [AdmissionQuestionOption!]!
+    points: Float!
+    position: Int!
+  }
+
+  type AdmissionTest {
+    id: ID!
+    status: AdmissionTestStatus!
+    durationMinutes: Int!
+    passScore: Float!
+    startedAt: DateTime
+    expiresAt: DateTime
+    invitationExpiresAt: DateTime!
+    submittedAt: DateTime
+    score: Float
+    maxScore: Float!
+    passed: Boolean
+    feedback: String
+    questions: [AdmissionQuestion!]!
+  }
+
+  type AdmissionApplicationPayload {
+    token: String!
+    user: User!
+    application: AdmissionApplication!
+  }
+
   # ─── Queries ──────────────────────────────────────────────
   type Query {
     # Auth
     me: User
+
+    # Public admissions
+    applicationCampuses(orgSlug: String = "1talent"): [Campus!]!
+
+    # Applicant admissions
+    myAdmissionApplication: AdmissionApplication
+    myAdmissionTest: AdmissionTest
+
+    # Staff admissions
+    admissionApplications(
+      status: AdmissionApplicationStatus
+      campusId: ID
+      limit: Int
+      offset: Int
+    ): [AdmissionApplication!]!
 
     # Students
     users(role: UserRole, status: UserStatus, limit: Int, offset: Int): [User!]!
@@ -174,6 +275,16 @@ export const typeDefs = gql`
     register(input: RegisterInput!): AuthPayload!
     login(email: String!, password: String!, orgSlug: String): AuthPayload!
 
+    # Admissions
+    submitAdmissionApplication(input: SubmitAdmissionApplicationInput!): AdmissionApplicationPayload!
+    reviewAdmissionApplication(
+      applicationId: ID!
+      decision: AdmissionReviewDecision!
+      notes: String
+    ): AdmissionApplication!
+    startAdmissionTest: AdmissionTest!
+    submitAdmissionTest(answers: [AdmissionAnswerInput!]!): AdmissionTest!
+
     # Admin
     updateUserRole(userId: ID!, role: UserRole!): User!
     updateUserStatus(userId: ID!, status: UserStatus!): User!
@@ -201,6 +312,31 @@ export const typeDefs = gql`
     phone: String
     orgId: ID
     campusId: ID
+  }
+
+  input SubmitAdmissionApplicationInput {
+    username: String!
+    email: String!
+    password: String!
+    fullName: String!
+    phone: String
+    orgSlug: String = "1talent"
+    campusId: ID!
+    dateOfBirth: String!
+    country: String!
+    city: String!
+    highestEducation: String!
+    codingExperience: String!
+    motivation: String!
+    availability: String!
+    referralSource: String
+    termsAccepted: Boolean!
+    dataConsent: Boolean!
+  }
+
+  input AdmissionAnswerInput {
+    questionId: ID!
+    selectedOptions: [String!]!
   }
 
   input CreateOrganizationInput {

@@ -4,6 +4,8 @@ import { projectResolvers } from './projects.js';
 import { dashboardResolvers } from './dashboard.js';
 import { organizationResolvers } from './organizations.js';
 import { campusResolvers } from './campuses.js';
+import { admissionResolvers } from './admissions.js';
+import { fieldResolvers } from './fields.js';
 import { GraphQLScalarType, Kind } from 'graphql';
 
 const DateTimeScalar = new GraphQLScalarType({
@@ -16,6 +18,7 @@ const DateTimeScalar = new GraphQLScalarType({
 export const resolvers = {
   DateTime: DateTimeScalar,
   JSON: new GraphQLScalarType({ name: 'JSON', serialize: (v) => v, parseValue: (v) => v, parseLiteral: (ast) => ast }),
+  ...fieldResolvers,
   Query: {
     ...authResolvers.Query,
     ...userResolvers.Query,
@@ -23,11 +26,13 @@ export const resolvers = {
     ...dashboardResolvers.Query,
     ...organizationResolvers.Query,
     ...campusResolvers.Query,
+    ...admissionResolvers.Query,
   },
   Mutation: {
     ...authResolvers.Mutation,
     ...userResolvers.Mutation,
     ...organizationResolvers.Mutation,
     ...campusResolvers.Mutation,
+    ...admissionResolvers.Mutation,
   },
 };

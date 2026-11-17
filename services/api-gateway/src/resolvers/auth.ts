@@ -5,7 +5,7 @@ import { query, queryOne } from '../db.js';
 
 type UserRow = Record<string, string>;
 
-function signToken(user: UserRow): string {
+export function signToken(user: UserRow): string {
   const opts: SignOptions = {
     expiresIn: (process.env.JWT_EXPIRES_IN ?? '7d') as SignOptions['expiresIn'],
   };
