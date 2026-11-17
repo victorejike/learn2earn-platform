@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, gql } from '@apollo/client';
 import { Eye, EyeOff } from 'lucide-react';
-import techBg from '../../assets/tech-bg.jpg';
+import techBgWide from '../../assets/tech-bg-wide.jpg';
 
 const LOGIN_MUTATION = gql`
   mutation Login($email: String!, $password: String!) {
@@ -104,25 +104,25 @@ export default function PortalPage() {
   };
 
   return (
-    <div className="relative min-h-screen w-full text-[#d1d5db] font-mono selection:bg-[#8b5cf6] selection:text-white flex flex-col justify-between overflow-x-hidden">
+    <div className="relative min-h-screen w-full bg-[#040918] text-[#d1d5db] font-mono selection:bg-[#0066ff] selection:text-white flex flex-col justify-between overflow-x-hidden">
       {/* 
         ========================================================================
-        BLUE TECHNOLOGY BACKGROUND (Exact Image from User)
+        PANORAMIC BLUE TECHNOLOGY BACKGROUND (Wide, Unzoomed, High-Contrast)
         ========================================================================
       */}
       <div
         className="fixed inset-0 pointer-events-none z-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url(${techBg})`,
-          filter: 'brightness(0.95) contrast(1.15)',
+          backgroundImage: `url(${techBgWide})`,
+          filter: 'brightness(1.0) contrast(1.15)',
         }}
       />
-      {/* Soft left gradient so white text on left is crystal-clear while glowing blue tech on right shines through */}
-      <div className="fixed inset-0 pointer-events-none z-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
+      {/* Gentle left dark gradient to ensure optimal typography contrast for white text */}
+      <div className="fixed inset-0 pointer-events-none z-0 bg-gradient-to-r from-[#040918]/85 via-[#040918]/40 to-transparent" />
 
       {/* 
         ========================================================================
-        TOP-LEFT: 01 / 1T DOT-MATRIX LOGO
+        TOP-LEFT: 01 / 1TALENT MONOSPACE HEADER
         ========================================================================
       */}
       <header className="relative z-10 w-full px-8 sm:px-16 pt-8 pb-4">
@@ -131,7 +131,7 @@ export default function PortalPage() {
             01
           </span>
           <span className="text-gray-500 font-mono text-sm">/</span>
-          <span className="font-mono text-base font-bold tracking-widest text-[#38bdf8]">
+          <span className="font-mono text-base font-bold tracking-widest text-[#00d4ff]">
             1TALENT
           </span>
         </div>
@@ -144,7 +144,7 @@ export default function PortalPage() {
       */}
       <main className="relative z-10 flex-1 w-full max-w-7xl mx-auto px-8 sm:px-16 py-6 sm:py-10 flex flex-col lg:flex-row items-start justify-between gap-12 lg:gap-24">
         
-        {/* LEFT COLUMN: EXACT 01EDU COPY & SPACING */}
+        {/* LEFT COLUMN: 01EDU FORMATTED INSTRUCTIONS */}
         <div className="w-full lg:w-7/12 flex flex-col justify-start">
           {/* Main Title */}
           <h1 className="font-mono text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-white mb-8">
@@ -176,16 +176,16 @@ export default function PortalPage() {
           {/* Contact Link */}
           <div className="pt-8 text-xs font-mono text-[#9ca3af]">
             <span>Want to know more about us? </span>
-            <span className="text-[#b895ff] hover:underline cursor-pointer">Contact us</span>
+            <span className="text-[#00d4ff] hover:underline cursor-pointer">Contact us</span>
           </div>
         </div>
 
-        {/* RIGHT COLUMN: EXACT 01EDU LOGIN FORM (NO CARD BOX) */}
+        {/* RIGHT COLUMN: LOGIN FORM (NO CARD BOX, ELECTRIC BLUE BUTTON) */}
         <div className="w-full lg:w-5/12 max-w-md">
           {mode === 'login' ? (
             <div>
-              {/* Monospace Lavender Title */}
-              <h2 className="font-mono text-2xl font-normal tracking-wide text-[#b895ff] mb-6">
+              {/* Header in Electric Blue */}
+              <h2 className="font-mono text-2xl font-normal tracking-wide text-[#38bdf8] mb-6">
                 Log in to resume your works
               </h2>
 
@@ -207,7 +207,7 @@ export default function PortalPage() {
                     value={emailOrUsername}
                     onChange={(e) => setEmailOrUsername(e.target.value)}
                     placeholder="victorejiki@gmail.com"
-                    className="w-full bg-[#141824]/90 border-b border-[#334155] focus:border-[#b895ff] px-3.5 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
+                    className="w-full bg-[#0a1124]/90 border-b border-[#1e293b] focus:border-[#00d4ff] px-3.5 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
                   />
                 </div>
 
@@ -223,12 +223,12 @@ export default function PortalPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••••••"
-                      className="w-full bg-[#141824]/90 border-b border-[#334155] focus:border-[#b895ff] px-3.5 py-2.5 pr-10 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
+                      className="w-full bg-[#0a1124]/90 border-b border-[#1e293b] focus:border-[#00d4ff] px-3.5 py-2.5 pr-10 text-sm text-white placeholder-gray-500 focus:outline-none transition-colors font-mono"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#00d4ff] transition-colors"
                       aria-label="Toggle password visibility"
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -241,18 +241,18 @@ export default function PortalPage() {
                   <button
                     type="button"
                     onClick={() => setForgotModalOpen(true)}
-                    className="font-mono text-xs text-[#9ca3af] hover:text-[#d1d5db] transition-colors"
+                    className="font-mono text-xs text-[#9ca3af] hover:text-[#00d4ff] transition-colors"
                   >
                     Forgot password? <span className="underline">Click here!</span>
                   </button>
                 </div>
 
-                {/* LOGIN BUTTON (Right-Aligned Rectangular Purple Button like 01Edu) */}
+                {/* LOGIN BUTTON (Electric Blue Brand Color) */}
                 <div className="flex justify-end pt-3">
                   <button
                     type="submit"
                     disabled={loginLoading}
-                    className="w-44 py-2.5 px-6 rounded bg-[#8b5cf6] hover:bg-[#7c3aed] text-white font-mono text-xs font-bold uppercase tracking-wider transition-colors disabled:opacity-50 text-center shadow-lg shadow-purple-500/20"
+                    className="w-44 py-2.5 px-6 rounded bg-[#0284c7] hover:bg-[#00d4ff] text-white hover:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all duration-200 disabled:opacity-50 text-center shadow-[0_0_20px_rgba(2,132,199,0.45)] hover:shadow-[0_0_25px_rgba(0,212,255,0.7)]"
                   >
                     {loginLoading ? 'LOGGING IN...' : 'LOGIN'}
                   </button>
@@ -268,7 +268,7 @@ export default function PortalPage() {
                         setMode('register');
                         setErrorMsg('');
                       }}
-                      className="text-[#b895ff] hover:text-white underline font-semibold ml-1 transition-colors"
+                      className="text-[#00d4ff] hover:text-white underline font-semibold ml-1 transition-colors"
                     >
                       REGISTER NOW!
                     </button>
@@ -279,7 +279,7 @@ export default function PortalPage() {
           ) : (
             <div>
               {/* Register Mode */}
-              <h2 className="font-mono text-2xl font-normal tracking-wide text-[#38bdf8] mb-6">
+              <h2 className="font-mono text-2xl font-normal tracking-wide text-[#00d4ff] mb-6">
                 Register to 1Talent
               </h2>
 
@@ -300,7 +300,7 @@ export default function PortalPage() {
                     value={regFullName}
                     onChange={(e) => setRegFullName(e.target.value)}
                     placeholder="Victor Ejike"
-                    className="w-full bg-[#141824]/90 border-b border-[#334155] focus:border-[#38bdf8] px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none font-mono"
+                    className="w-full bg-[#0a1124]/90 border-b border-[#1e293b] focus:border-[#00d4ff] px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none font-mono"
                   />
                 </div>
 
@@ -315,14 +315,14 @@ export default function PortalPage() {
                       value={regUsername}
                       onChange={(e) => setRegUsername(e.target.value)}
                       placeholder="victor"
-                      className="w-full bg-[#141824]/90 border-b border-[#334155] focus:border-[#38bdf8] px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none font-mono"
+                      className="w-full bg-[#0a1124]/90 border-b border-[#1e293b] focus:border-[#00d4ff] px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none font-mono"
                     />
                   </div>
                   <div>
                     <label className="block font-mono text-xs text-[#9ca3af] mb-1">
                       Campus
                     </label>
-                    <div className="px-3 py-2 bg-[#141824]/90 border-b border-[#334155] text-xs font-mono text-[#38bdf8]">
+                    <div className="px-3 py-2 bg-[#0a1124]/90 border-b border-[#1e293b] text-xs font-mono text-[#00d4ff]">
                       Learn2Earn
                     </div>
                   </div>
@@ -338,7 +338,7 @@ export default function PortalPage() {
                     value={regEmail}
                     onChange={(e) => setRegEmail(e.target.value)}
                     placeholder="victorejiki@gmail.com"
-                    className="w-full bg-[#141824]/90 border-b border-[#334155] focus:border-[#38bdf8] px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none font-mono"
+                    className="w-full bg-[#0a1124]/90 border-b border-[#1e293b] focus:border-[#00d4ff] px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none font-mono"
                   />
                 </div>
 
@@ -352,7 +352,7 @@ export default function PortalPage() {
                     value={regPassword}
                     onChange={(e) => setRegPassword(e.target.value)}
                     placeholder="••••••••••••"
-                    className="w-full bg-[#141824]/90 border-b border-[#334155] focus:border-[#38bdf8] px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none font-mono"
+                    className="w-full bg-[#0a1124]/90 border-b border-[#1e293b] focus:border-[#00d4ff] px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none font-mono"
                   />
                 </div>
 
@@ -360,7 +360,7 @@ export default function PortalPage() {
                   <button
                     type="submit"
                     disabled={regLoading}
-                    className="w-48 py-2.5 px-6 rounded bg-[#0284c7] hover:bg-[#0369a1] text-white font-mono text-xs font-bold uppercase tracking-wider transition-colors disabled:opacity-50 text-center"
+                    className="w-48 py-2.5 px-6 rounded bg-[#0284c7] hover:bg-[#00d4ff] text-white hover:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all duration-200 disabled:opacity-50 text-center shadow-[0_0_20px_rgba(2,132,199,0.45)] hover:shadow-[0_0_25px_rgba(0,212,255,0.7)]"
                   >
                     {regLoading ? 'CREATING...' : 'CREATE ACCOUNT'}
                   </button>
@@ -375,7 +375,7 @@ export default function PortalPage() {
                         setMode('login');
                         setErrorMsg('');
                       }}
-                      className="text-[#38bdf8] hover:text-white underline font-semibold ml-1 transition-colors"
+                      className="text-[#00d4ff] hover:text-white underline font-semibold ml-1 transition-colors"
                     >
                       LOGIN HERE
                     </button>
@@ -390,7 +390,7 @@ export default function PortalPage() {
       {/* Forgot Password Dialog */}
       {forgotModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-          <div className="w-full max-w-sm bg-[#12151f] border border-white/10 rounded-lg p-6 space-y-4 font-mono shadow-2xl">
+          <div className="w-full max-w-sm bg-[#091124] border border-[#00d4ff]/30 rounded-lg p-6 space-y-4 font-mono shadow-2xl">
             <h3 className="text-base font-medium text-white">Reset Password</h3>
             <p className="text-xs text-[#9ca3af] leading-relaxed">
               Enter your email address and we will dispatch a reset link.
@@ -398,7 +398,7 @@ export default function PortalPage() {
             <input
               type="email"
               placeholder="victorejiki@gmail.com"
-              className="w-full bg-[#1b2030] border border-white/10 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-[#8b5cf6]"
+              className="w-full bg-[#030712] border border-white/10 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-[#00d4ff]"
             />
             <div className="flex justify-end gap-3 pt-2 text-xs">
               <button
@@ -414,7 +414,7 @@ export default function PortalPage() {
                   alert('Reset link sent to your registered email address.');
                   setForgotModalOpen(false);
                 }}
-                className="px-4 py-1.5 rounded bg-[#8b5cf6] text-white font-medium hover:bg-[#7c3aed]"
+                className="px-4 py-1.5 rounded bg-[#0284c7] text-white font-medium hover:bg-[#00d4ff] hover:text-black transition-colors"
               >
                 Send Reset Link
               </button>
@@ -423,8 +423,8 @@ export default function PortalPage() {
         </div>
       )}
 
-      {/* Discreet bottom footer matching 01Edu */}
-      <footer className="relative z-10 w-full px-8 sm:px-16 py-4 text-xs font-mono text-[#6b7280] flex justify-between items-center">
+      {/* Discreet bottom footer */}
+      <footer className="relative z-10 w-full px-8 sm:px-16 py-4 text-xs font-mono text-[#64748b] flex justify-between items-center">
         <span>1Talent Platform</span>
         <span>Campus: Learn2Earn</span>
       </footer>

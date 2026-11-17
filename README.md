@@ -298,10 +298,10 @@ This section is updated with every significant commit.
 
 **Student portal (React + TypeScript + Tailwind)**
 - **1Talent Entry Portal (`PortalPage.tsx`)**:
-  - Full-bleed blue technology network background (`tech-bg.jpg`) with natural high contrast
+  - Wide panoramic blue technology network background (`tech-bg-wide.jpg`, 1920x1080) rendered without distortion or excessive zoom
   - 01Edu-accurate 2-column structure matching `learn.reboot01.com`
   - Left side: "Welcome to 1Talent !", 3-step onboarding guide, contact link
-  - Right side: "Log in to resume your works" with frameless minimal inputs, eye toggle, and right-aligned purple `LOGIN` button
+  - Right side: "Log in to resume your works" with frameless minimal inputs, eye toggle, and electric blue brand action button (`#0284c7` / `#00d4ff`)
   - Frameless design sitting directly on the canvas without card enclosures
   - Seamless inline switch to Registration mode ("New here? Join the fun! REGISTER NOW!")
 - Dashboard: personal XP/level stats + campus overview (staff only) + available projects
