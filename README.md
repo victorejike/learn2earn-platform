@@ -316,7 +316,9 @@ This section is updated with every significant commit.
 
 **Admissions & Selection Engine**
 - Migration `004_admissions.sql`: `admission_applications`, `admission_questions`, `admission_tests`
-- Timed 60-minute cognitive & logic assessment with auto-grading
+- Timed 60-minute cognitive & logic assessment with auto-grading and questions navigation
+- Auto-provisioning of cognitive test on candidate profile completion (zero wait time for applicants)
+- Bespoke 1Talent Electric Blue & Cyan cyber styling with built-in client fallback test bank
 - Multi-step application flow: personal info, background, motivation, review
 - Status tracking: draft → submitted → under_review → invited_to_test → test_passed/failed → accepted
 

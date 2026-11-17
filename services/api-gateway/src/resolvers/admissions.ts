@@ -116,7 +116,7 @@ async function publicQuestions(testId: string, client?: PoolClient): Promise<Row
 }
 
 async function testForUser(userId: string): Promise<Row | null> {
-  const test = await queryOne<Row>(
+  let test = await queryOne<Row>(
     `SELECT t.*
      FROM admission_tests t
      WHERE t.user_id = $1
@@ -124,6 +124,44 @@ async function testForUser(userId: string): Promise<Row | null> {
      LIMIT 1`,
     [userId]
   );
+
+  if (!test) {
+    const user = await queryOne<Row>('SELECT * FROM users WHERE id = $1', [userId]);
+    if (user) {
+      const questionRows = await query<Row>(
+        `SELECT * FROM admission_questions
+         WHERE is_active = TRUE
+         ORDER BY position ASC`
+      );
+
+      if (questionRows.length > 0) {
+        const [newTest] = await query<Row>(
+          `INSERT INTO admission_tests
+             (user_id, status, duration_minutes, pass_score, max_score, invitation_expires_at)
+           VALUES ($1, 'invited', 60, 70, 100, NOW() + INTERVAL '7 days')
+           RETURNING *`,
+          [userId]
+        );
+        test = newTest;
+        for (const question of questionRows) {
+          await query(
+            `INSERT INTO admission_test_questions
+               (test_id, question_id, position, question_snapshot)
+             VALUES ($1, $2, $3, jsonb_build_object(
+               'prompt', $4::text,
+               'type', $5::text,
+               'options', $6::jsonb,
+               'answerKey', $7::jsonb,
+               'points', $8::numeric
+             ))`,
+            [test.id, question.id, question.position, question.prompt,
+             question.type, JSON.stringify(question.options),
+             JSON.stringify(question.answer_key), question.points]
+          );
+        }
+      }
+    }
+  }
 
   if (!test) return null;
   return {
