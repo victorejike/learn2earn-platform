@@ -297,14 +297,13 @@ This section is updated with every significant commit.
 - Health check endpoint: `GET /health`
 
 **Student portal (React + TypeScript + Tailwind)**
-**Student portal (React + TypeScript + Tailwind)**
-- **1Talent Bespoke Portal (`PortalPage.tsx`)**:
-  - Distinctive 1Talent geometric brand identity (`1T` cyber badge + `1TALENT` wordmark)
-  - Full-bleed immersive blue technology network background bundled directly via Vite asset pipeline (`tech-bg.jpg`) with lively ambient pulse and subtle radial depth vignette
-  - 1Talent original engineering copy: "Engineering Mastery. Built on Real Code."
-  - 4-step admission progression overview: Register → Assessment → Piscine → The Graph
-  - Clean glassmorphism authentication module with electric cyan accents, password toggle, and admission application switcher
-  - Multi-tenant campus badge (`Campus: Learn2Earn`)
+- **1Talent Entry Portal (`PortalPage.tsx`)**:
+  - Full-bleed blue technology network background (`tech-bg.jpg`) with natural high contrast
+  - 01Edu-accurate 2-column structure matching `learn.reboot01.com`
+  - Left side: "Welcome to 1Talent !", 3-step onboarding guide, contact link
+  - Right side: "Log in to resume your works" with frameless minimal inputs, eye toggle, and right-aligned purple `LOGIN` button
+  - Frameless design sitting directly on the canvas without card enclosures
+  - Seamless inline switch to Registration mode ("New here? Join the fun! REGISTER NOW!")
 - Dashboard: personal XP/level stats + campus overview (staff only) + available projects
 - Projects page: list all available projects
 - Profile page: XP, level, audit ratio, correction points
