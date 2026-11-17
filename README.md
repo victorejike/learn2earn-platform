@@ -301,8 +301,8 @@ This section is updated with every significant commit.
   - Seamless feathered blue technology network background (`tech-bg-wide.jpg`, 1920x1080) with 0 seams, zero edge cutoffs, and wide unzoomed perspective
   - **Lively Full-Page Web (`ElectronNetwork.tsx`)**: Organic floating web across the entire canvas with smooth drifting nodes and soft, non-glaring electrons cruising along connections; balanced luminance with zero harsh glare or explosive flashes
   - Clean brand header: `1talent` (all references to "01" and "Platform" removed)
-  - Left side: "Welcome to 1talent !" enforced on **one single line** (`whitespace-nowrap`), 3-step onboarding guide, contact link
-  - Right side: "Log in to resume your works" with frameless minimal inputs, eye toggle, and electric blue brand action button (`#0066ff`)
+  - Left side: "Welcome to 1talent !" in massive bold monospace (up to 68px, single line `whitespace-nowrap`), enlarged high-contrast body copy (text-lg to text-2xl), spacious 3-step onboarding guide, contact link
+  - Right side: "Log in to resume your works" with enlarged readable labels, tall inputs (py-3.5), eye toggle, bold Electric Blue action button (`#0066ff`), and seamless high-contrast Registration option
   - Seamless inline switch to Registration mode ("New here? Join the fun! REGISTER NOW!")
 - Dashboard: personal XP/level stats + campus overview (staff only) + available projects
 - Projects page: list all available projects
