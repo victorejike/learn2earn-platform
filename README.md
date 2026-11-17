@@ -299,10 +299,10 @@ This section is updated with every significant commit.
 **Student portal (React + TypeScript + Tailwind)**
 - **1talent Entry Portal (`PortalPage.tsx`)**:
   - Seamless feathered blue technology network background (`tech-bg-wide.jpg`, 1920x1080) with 0 seams, zero edge cutoffs, and wide unzoomed perspective
-  - **Lively Full-Page Web (`ElectronNetwork.tsx`)**: Organic floating web across the entire canvas with smooth drifting nodes and soft, non-glaring electrons cruising along connections; balanced luminance with zero harsh glare or explosive flashes
+  - **Ambient Deep-Background Motion (`ElectronNetwork.tsx`)**: Electrons restricted to the right-side constellation network in the deep background, gliding at a slow, peaceful ambient speed (3x slower) with zero eye strain, leaving the text reading area completely calm and dark
   - Clean brand header: `1talent` (all references to "01" and "Platform" removed)
-  - Left side: "Welcome to 1talent !" in massive bold monospace (up to 68px, single line `whitespace-nowrap`), enlarged high-contrast body copy (text-lg to text-2xl), spacious 3-step onboarding guide, contact link
-  - Right side: "Log in to resume your works" with enlarged readable labels, tall inputs (py-3.5), eye toggle, bold Electric Blue action button (`#0066ff`), and seamless high-contrast Registration option
+  - Left side: "Welcome to 1talent !" in balanced, authoritative monospace (text-4xl to 5xl, single line `whitespace-nowrap`), comfortable readable body copy, structured 3-step onboarding guide, contact link
+  - Right side: "Log in to resume your works" with comfortable minimal inputs, eye toggle, Electric Blue action button (`#0066ff`), and seamless Registration switcher
   - Seamless inline switch to Registration mode ("New here? Join the fun! REGISTER NOW!")
 - Dashboard: personal XP/level stats + campus overview (staff only) + available projects
 - Projects page: list all available projects
