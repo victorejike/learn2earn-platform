@@ -128,7 +128,7 @@ export default function PortalPage() {
         localStorage.setItem('talent_token', data.login.token);
         const role = data.login.user.role;
         if (['APPLICANT', 'PISCINER'].includes(role)) {
-          navigate('/application');
+          navigate('/intra/learn2earn');
         } else {
           navigate('/dashboard');
         }
@@ -185,10 +185,10 @@ export default function PortalPage() {
       if (data?.completeRegistration?.token) {
         localStorage.setItem('talent_token', data.completeRegistration.token);
       }
-      navigate('/assessment');
+      navigate('/intra/learn2earn');
     } catch {
-      // In demo mode or offline mode, navigate candidate directly to assessment games
-      navigate('/assessment');
+      // In demo mode or offline mode, navigate candidate directly to profile step
+      navigate('/intra/learn2earn');
     }
   };
 

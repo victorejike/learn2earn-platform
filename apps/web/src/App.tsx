@@ -9,6 +9,7 @@ import LandingPage from './features/admission/LandingPage';
 import ApplicationPage from './features/admission/ApplicationPage';
 import ApplicationStatusPage from './features/admission/ApplicationStatusPage';
 import AdmissionTestPage from './features/admission/AdmissionTestPage';
+import IntraProfilePage from './features/admission/IntraProfilePage';
 import Layout from './components/Layout';
 
 const ME_QUERY = gql`query Me { me { id username fullName role status xpTotal level correctionPoints auditRatio } }`;
@@ -32,7 +33,10 @@ export default function App() {
 
       {/* Admission and Assessment Flow */}
       <Route path="/apply" element={<ApplicationPage />} />
-      <Route path="/application" element={<ProtectedRoute><ApplicationStatusPage /></ProtectedRoute>} />
+      <Route path="/intra/:campusSlug" element={<ProtectedRoute><IntraProfilePage /></ProtectedRoute>} />
+      <Route path="/intra" element={<Navigate to="/intra/learn2earn" replace />} />
+      <Route path="/application" element={<ProtectedRoute><IntraProfilePage /></ProtectedRoute>} />
+      <Route path="/application/status" element={<ProtectedRoute><ApplicationStatusPage /></ProtectedRoute>} />
       <Route path="/assessment" element={<ProtectedRoute><AdmissionTestPage /></ProtectedRoute>} />
 
       {/* Authenticated Student Portal */}
