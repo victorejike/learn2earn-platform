@@ -297,12 +297,12 @@ This section is updated with every significant commit.
 - Health check endpoint: `GET /health`
 
 **Student portal (React + TypeScript + Tailwind)**
-- **1Talent Entry Portal (`PortalPage.tsx`)**:
-  - Wide panoramic blue technology network background (`tech-bg-wide.jpg`, 1920x1080) rendered without distortion or excessive zoom
+- **1talent Entry Portal (`PortalPage.tsx`)**:
+  - Seamless feathered blue technology network background (`tech-bg-wide.jpg`, 1920x1080) with 0 seams, zero edge cutoffs, and wide unzoomed perspective
+  - Clean brand header: `1talent` (all references to "01" and "Platform" removed)
   - 01Edu-accurate 2-column structure matching `learn.reboot01.com`
-  - Left side: "Welcome to 1Talent !", 3-step onboarding guide, contact link
-  - Right side: "Log in to resume your works" with frameless minimal inputs, eye toggle, and electric blue brand action button (`#0284c7` / `#00d4ff`)
-  - Frameless design sitting directly on the canvas without card enclosures
+  - Left side: "Welcome to 1talent !", 3-step onboarding guide, contact link
+  - Right side: "Log in to resume your works" with frameless minimal inputs, eye toggle, and electric blue brand action button (`#0066ff`)
   - Seamless inline switch to Registration mode ("New here? Join the fun! REGISTER NOW!")
 - Dashboard: personal XP/level stats + campus overview (staff only) + available projects
 - Projects page: list all available projects

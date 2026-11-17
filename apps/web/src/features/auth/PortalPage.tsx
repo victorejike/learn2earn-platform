@@ -104,10 +104,10 @@ export default function PortalPage() {
   };
 
   return (
-    <div className="relative min-h-screen w-full bg-[#040918] text-[#d1d5db] font-mono selection:bg-[#0066ff] selection:text-white flex flex-col justify-between overflow-x-hidden">
+    <div className="relative min-h-screen w-full bg-[#030712] text-[#d1d5db] font-mono selection:bg-[#0066ff] selection:text-white flex flex-col justify-between overflow-x-hidden">
       {/* 
         ========================================================================
-        PANORAMIC BLUE TECHNOLOGY BACKGROUND (Wide, Unzoomed, High-Contrast)
+        BLUE TECHNOLOGY BACKGROUND (Seamless Wide Perspective, Zero Seams)
         ========================================================================
       */}
       <div
@@ -117,43 +117,39 @@ export default function PortalPage() {
           filter: 'brightness(1.0) contrast(1.15)',
         }}
       />
-      {/* Gentle left dark gradient to ensure optimal typography contrast for white text */}
-      <div className="fixed inset-0 pointer-events-none z-0 bg-gradient-to-r from-[#040918]/85 via-[#040918]/40 to-transparent" />
+      {/* Subtle left-side dark gradient to guarantee pure text contrast */}
+      <div className="fixed inset-0 pointer-events-none z-0 bg-gradient-to-r from-[#030712]/90 via-[#030712]/50 to-transparent" />
 
       {/* 
         ========================================================================
-        TOP-LEFT: 01 / 1TALENT MONOSPACE HEADER
+        TOP-LEFT: 1TALENT BRAND HEADER (No 01, No Platform)
         ========================================================================
       */}
       <header className="relative z-10 w-full px-8 sm:px-16 pt-8 pb-4">
         <div className="flex items-center gap-2 select-none">
-          <span className="font-mono text-2xl font-black tracking-wider text-white">
-            01
-          </span>
-          <span className="text-gray-500 font-mono text-sm">/</span>
-          <span className="font-mono text-base font-bold tracking-widest text-[#00d4ff]">
-            1TALENT
+          <span className="font-mono text-2xl font-bold tracking-tight text-white">
+            <span className="text-[#00d4ff]">1</span>talent
           </span>
         </div>
       </header>
 
       {/* 
         ========================================================================
-        MAIN SECTION: EXACT 01EDU 2-COLUMN STRUCTURE
+        MAIN SECTION: 2-COLUMN FORMAT
         ========================================================================
       */}
       <main className="relative z-10 flex-1 w-full max-w-7xl mx-auto px-8 sm:px-16 py-6 sm:py-10 flex flex-col lg:flex-row items-start justify-between gap-12 lg:gap-24">
         
-        {/* LEFT COLUMN: 01EDU FORMATTED INSTRUCTIONS */}
+        {/* LEFT COLUMN */}
         <div className="w-full lg:w-7/12 flex flex-col justify-start">
           {/* Main Title */}
           <h1 className="font-mono text-4xl sm:text-5xl lg:text-6xl font-normal tracking-tight text-white mb-8">
-            Welcome to 1Talent !
+            Welcome to 1talent !
           </h1>
 
           {/* Description */}
           <p className="font-mono text-[#9ca3af] text-sm sm:text-base leading-relaxed mb-8 max-w-xl">
-            1Talent Platform is our collaborative coding education platform.
+            1talent is our collaborative coding education platform.
           </p>
 
           {/* 3 Steps */}
@@ -180,11 +176,11 @@ export default function PortalPage() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: LOGIN FORM (NO CARD BOX, ELECTRIC BLUE BUTTON) */}
+        {/* RIGHT COLUMN: LOGIN FORM (ELECTRIC BLUE BRAND STYLING) */}
         <div className="w-full lg:w-5/12 max-w-md">
           {mode === 'login' ? (
             <div>
-              {/* Header in Electric Blue */}
+              {/* Header */}
               <h2 className="font-mono text-2xl font-normal tracking-wide text-[#38bdf8] mb-6">
                 Log in to resume your works
               </h2>
@@ -252,7 +248,7 @@ export default function PortalPage() {
                   <button
                     type="submit"
                     disabled={loginLoading}
-                    className="w-44 py-2.5 px-6 rounded bg-[#0284c7] hover:bg-[#00d4ff] text-white hover:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all duration-200 disabled:opacity-50 text-center shadow-[0_0_20px_rgba(2,132,199,0.45)] hover:shadow-[0_0_25px_rgba(0,212,255,0.7)]"
+                    className="w-44 py-2.5 px-6 rounded bg-[#0066ff] hover:bg-[#0052cc] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all duration-200 disabled:opacity-50 text-center shadow-[0_0_20px_rgba(0,102,255,0.45)] hover:shadow-[0_0_25px_rgba(0,102,255,0.7)]"
                   >
                     {loginLoading ? 'LOGGING IN...' : 'LOGIN'}
                   </button>
@@ -280,7 +276,7 @@ export default function PortalPage() {
             <div>
               {/* Register Mode */}
               <h2 className="font-mono text-2xl font-normal tracking-wide text-[#00d4ff] mb-6">
-                Register to 1Talent
+                Register to 1talent
               </h2>
 
               {errorMsg && (
@@ -360,7 +356,7 @@ export default function PortalPage() {
                   <button
                     type="submit"
                     disabled={regLoading}
-                    className="w-48 py-2.5 px-6 rounded bg-[#0284c7] hover:bg-[#00d4ff] text-white hover:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all duration-200 disabled:opacity-50 text-center shadow-[0_0_20px_rgba(2,132,199,0.45)] hover:shadow-[0_0_25px_rgba(0,212,255,0.7)]"
+                    className="w-48 py-2.5 px-6 rounded bg-[#0066ff] hover:bg-[#0052cc] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all duration-200 disabled:opacity-50 text-center shadow-[0_0_20px_rgba(0,102,255,0.45)] hover:shadow-[0_0_25px_rgba(0,102,255,0.7)]"
                   >
                     {regLoading ? 'CREATING...' : 'CREATE ACCOUNT'}
                   </button>
@@ -414,7 +410,7 @@ export default function PortalPage() {
                   alert('Reset link sent to your registered email address.');
                   setForgotModalOpen(false);
                 }}
-                className="px-4 py-1.5 rounded bg-[#0284c7] text-white font-medium hover:bg-[#00d4ff] hover:text-black transition-colors"
+                className="px-4 py-1.5 rounded bg-[#0066ff] text-white font-medium hover:bg-[#0052cc] transition-colors"
               >
                 Send Reset Link
               </button>
@@ -425,7 +421,7 @@ export default function PortalPage() {
 
       {/* Discreet bottom footer */}
       <footer className="relative z-10 w-full px-8 sm:px-16 py-4 text-xs font-mono text-[#64748b] flex justify-between items-center">
-        <span>1Talent Platform</span>
+        <span>1talent</span>
         <span>Campus: Learn2Earn</span>
       </footer>
     </div>
