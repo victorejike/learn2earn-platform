@@ -297,14 +297,13 @@ This section is updated with every significant commit.
 - Health check endpoint: `GET /health`
 
 **Student portal (React + TypeScript + Tailwind)**
-- **01Edu-Mirroring Entry Portal (`PortalPage.tsx`)**:
-  - Exact 01Edu 2-column layout matching `learn.reboot01.com`
-  - High-tech dynamic neural mesh background (`TechBackground.tsx`) with lively animated HTML5 canvas (floating particles, glowing constellation nodes, interactive cursor connection lines)
-  - 1Talent dot-matrix LED pixel brand logo (`TalentLogo.tsx`)
-  - Authentic monospace typography (`JetBrains Mono`, `Space Mono`)
-  - Left panel: "Welcome to 1Talent !" with 3-step admission instructions and platform trust indicators
-  - Right panel: "Log in to resume your works" with password eyeball toggle, forgot password modal, and smooth inline switch to registration
-  - Multi-tenant campus badge (`Campus: Learn2Earn`) and one-click dev testing credentials helper
+- **01Edu-Authentic Entry Portal (`PortalPage.tsx`)**:
+  - Exact 01Edu 2-column layout matching `learn.reboot01.com` without card enclosures (frameless form sitting directly on the deep canvas)
+  - Subtle, muted blue technology background on the right edge with dark gradients (`from-[#0d0f15] via-[#0d0f15]/90 to-[#0d0f15]/40`) to ensure 100% typography legibility without visual interference
+  - Clean monospace typography (`JetBrains Mono`, `Space Mono`) for headings and auth prompts
+  - Left panel: "Welcome to 1Talent !" with authentic 3-step admission instructions
+  - Right panel: "Log in to resume your works" in signature lavender/purple (`#b895ff`) with email input, password with eye toggle, forgot password dialog, and rectangular purple `LOGIN` button
+  - Seamless inline switch to Registration mode ("New here? Join the fun! REGISTER NOW!")
 - Dashboard: personal XP/level stats + campus overview (staff only) + available projects
 - Projects page: list all available projects
 - Profile page: XP, level, audit ratio, correction points
