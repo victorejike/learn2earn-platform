@@ -144,7 +144,7 @@ class InMemoryDatabase {
     // Alternate candidate: ejikevicto@gmail.com
     const ejikeUser: MockUser = {
       id: 'u-ejike-victo-102',
-      username: 'ejikevicto',
+      username: 'evictor',
       email: 'ejikevicto@gmail.com',
       password_hash: defaultPasswordHash,
       full_name: 'Victor Ejike',

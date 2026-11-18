@@ -20,8 +20,8 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
   if (loading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-[#030712]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400" />
+      <div className="flex h-screen items-center justify-center bg-[#202022]">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#9065ff]" />
       </div>
     );
   }
@@ -46,11 +46,11 @@ export default function App() {
 
       {/* Admission and Assessment Flow */}
       <Route path="/apply" element={<ApplicationPage />} />
-      <Route path="/intra/:campusSlug" element={<ProtectedRoute><IntraProfilePage /></ProtectedRoute>} />
+      <Route path="/intra/:campusSlug" element={<IntraProfilePage />} />
       <Route path="/intra" element={<Navigate to="/intra/learn2earn" replace />} />
-      <Route path="/application" element={<ProtectedRoute><IntraProfilePage /></ProtectedRoute>} />
+      <Route path="/application" element={<IntraProfilePage />} />
       <Route path="/application/status" element={<ProtectedRoute><ApplicationStatusPage /></ProtectedRoute>} />
-      <Route path="/assessment" element={<ProtectedRoute><AdmissionTestPage /></ProtectedRoute>} />
+      <Route path="/assessment" element={<AdmissionTestPage />} />
 
       {/* Authenticated Student Portal */}
       <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>

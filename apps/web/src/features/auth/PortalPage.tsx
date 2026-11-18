@@ -216,30 +216,63 @@ export default function PortalPage() {
   };
 
   return (
-    <div className="relative min-h-screen w-full bg-[#030712] text-[#d1d5db] font-mono selection:bg-[#0066ff] selection:text-white flex flex-col justify-between overflow-x-hidden">
+    <div className="relative min-h-screen w-full bg-[#202022] text-[#d1d5db] font-mono selection:bg-[#9065ff] selection:text-white flex flex-col justify-between overflow-x-hidden">
       {/* 
         ========================================================================
-        PANORAMIC BLUE TECHNOLOGY BACKGROUND
-        Cinematic Orbital Approach: Shifts smoothly to the left and zooms as you
-        approach registration and profile completion ("approaching orbit")
+        AUTHENTIC 01Edu TOPOGRAPHIC SINE CONTOUR BACKGROUND
+        Smooth subtle vector contour lines shifting with orbital approach
         ========================================================================
       */}
       <div
-        className={`fixed -inset-10 sm:-inset-16 pointer-events-none z-0 bg-cover bg-no-repeat transition-all duration-1000 ease-out ${
+        className={`fixed inset-0 pointer-events-none z-0 transition-transform duration-1000 ease-out ${
           mode === 'complete-profile'
-            ? 'translate-x-[-35px] sm:translate-x-[-65px] lg:translate-x-[-100px] scale-[1.07] bg-[position:65%_center]'
+            ? 'translate-x-[-65px] scale-[1.04]'
             : mode === 'register'
-            ? 'translate-x-[-20px] sm:translate-x-[-40px] scale-[1.03] bg-[position:55%_center]'
-            : 'translate-x-0 scale-100 bg-center'
+            ? 'translate-x-[-35px] scale-[1.02]'
+            : 'translate-x-0 scale-100'
         }`}
-        style={{
-          backgroundImage: `url(${techBgWide})`,
-          filter: mode === 'complete-profile' ? 'brightness(1.08) contrast(1.18)' : 'brightness(1.0) contrast(1.15)',
-        }}
-      />
+      >
+        <svg
+          className="absolute inset-0 w-full h-full opacity-35"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+          viewBox="0 0 1440 900"
+        >
+          <path
+            d="M -100,180 C 300,90 600,380 900,230 C 1200,90 1400,330 1600,180"
+            fill="none"
+            stroke="#5d4f7a"
+            strokeWidth="1.2"
+          />
+          <path
+            d="M -100,280 C 250,160 550,500 850,300 C 1150,160 1350,430 1600,260"
+            fill="none"
+            stroke="#4e4168"
+            strokeWidth="1.2"
+          />
+          <path
+            d="M -100,400 C 200,240 500,600 800,370 C 1100,220 1300,540 1600,360"
+            fill="none"
+            stroke="#43375a"
+            strokeWidth="1"
+          />
+          <path
+            d="M -100,520 C 180,330 460,680 760,440 C 1050,290 1280,660 1600,470"
+            fill="none"
+            stroke="#3a2f4e"
+            strokeWidth="1"
+          />
+          <path
+            d="M -100,640 C 150,420 420,760 720,510 C 1000,370 1250,760 1600,580"
+            fill="none"
+            stroke="#322844"
+            strokeWidth="0.9"
+          />
+        </svg>
+      </div>
 
       {/* Smooth left-side dark gradient to ensure pure text contrast */}
-      <div className="fixed inset-0 pointer-events-none z-0 bg-gradient-to-r from-[#030712] via-[#030712]/75 to-transparent" />
+      <div className="fixed inset-0 pointer-events-none z-0 bg-gradient-to-r from-[#202022] via-[#202022]/80 to-transparent" />
 
       {/* 
         ========================================================================
@@ -248,7 +281,7 @@ export default function PortalPage() {
       */}
       <header className="relative z-10 w-full px-8 sm:px-16 pt-8 pb-4">
         <div className="flex items-center gap-3 select-none">
-          <svg width="28" height="24" viewBox="0 0 28 24" fill="currentColor" className="text-white">
+          <svg width="26" height="24" viewBox="0 0 28 24" fill="currentColor" className="text-white">
             <rect x="0" y="2" width="4" height="20" fill="currentColor" />
             <rect x="4" y="2" width="6" height="4" fill="currentColor" />
             <rect x="4" y="18" width="6" height="4" fill="currentColor" />
@@ -257,7 +290,7 @@ export default function PortalPage() {
             <rect x="22" y="2" width="4" height="20" fill="currentColor" />
           </svg>
           <span className="font-mono text-2xl sm:text-3xl font-bold tracking-tight text-white">
-            <span className="text-[#00d4ff]">1</span>Talent
+            1Talent
           </span>
         </div>
       </header>
@@ -272,14 +305,14 @@ export default function PortalPage() {
         {/* LEFT COLUMN: CRISP, CONFIDENT & READABLE */}
         <div className="w-full lg:w-7/12 flex flex-col justify-start">
           
-          {/* Main Title: Confident, single line, Capital T */}
+          {/* Main Title: Confident, single line */}
           <h1 className="font-mono text-4xl sm:text-5xl lg:text-[52px] font-bold tracking-tight text-white mb-6 whitespace-nowrap">
-            Welcome to 1Talent !
+            Welcome to 01 !
           </h1>
 
           {/* Description */}
           <p className="font-mono text-gray-300 text-base sm:text-lg leading-relaxed mb-8 max-w-xl">
-            1Talent is our collaborative coding education platform.
+            01Edu Platform is our collaborative coding education platform.
           </p>
 
           {/* 3 Steps */}
@@ -290,15 +323,15 @@ export default function PortalPage() {
 
             <div className="space-y-3 font-mono text-gray-200 pl-0.5">
               <p className="flex items-start gap-2.5">
-                <span className="text-[#00d4ff] font-bold">1)</span>
+                <span className="text-gray-400 font-bold">1)</span>
                 <span>Create an account, and log into the platform.</span>
               </p>
               <p className="flex items-start gap-2.5">
-                <span className="text-[#00d4ff] font-bold">2)</span>
+                <span className="text-gray-400 font-bold">2)</span>
                 <span>Complete the online cognitive test.</span>
               </p>
               <p className="flex items-start gap-2.5">
-                <span className="text-[#00d4ff] font-bold">3)</span>
+                <span className="text-gray-400 font-bold">3)</span>
                 <span>Wait to find out whether you&apos;ve made it to the next stage.</span>
               </p>
             </div>
@@ -311,7 +344,9 @@ export default function PortalPage() {
           {/* Contact Link */}
           <div className="pt-8 text-sm font-mono text-gray-400">
             <span>Want to know more about us? </span>
-            <span className="text-[#00d4ff] hover:underline cursor-pointer font-medium">Contact us</span>
+            <span className="text-white hover:text-[#b895ff] underline cursor-pointer font-medium transition-colors">
+              → Contact us.
+            </span>
           </div>
         </div>
 
@@ -342,7 +377,7 @@ export default function PortalPage() {
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     placeholder="Victor"
-                    className="w-full bg-transparent focus:bg-[#131d36]/75 border-0 border-b border-gray-600 focus:border-[#00d4ff] px-2.5 pb-2 pt-2 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
+                    className="w-full bg-transparent focus:bg-[#282c3c]/75 border-0 border-b border-[#444449] focus:border-[#9065ff] px-2.5 pb-2 pt-2 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
                   />
                 </div>
 
@@ -357,7 +392,7 @@ export default function PortalPage() {
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     placeholder="Ejik"
-                    className="w-full bg-transparent focus:bg-[#131d36]/75 border-0 border-b border-gray-600 focus:border-[#00d4ff] px-2.5 pb-2 pt-2 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
+                    className="w-full bg-transparent focus:bg-[#282c3c]/75 border-0 border-b border-[#444449] focus:border-[#9065ff] px-2.5 pb-2 pt-2 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
                   />
                 </div>
 
@@ -373,12 +408,12 @@ export default function PortalPage() {
                       value={profilePassword}
                       onChange={(e) => setProfilePassword(e.target.value)}
                       placeholder="••••••••••••"
-                      className="w-full bg-transparent focus:bg-[#131d36]/75 border-0 border-b border-gray-600 focus:border-[#00d4ff] px-2.5 pb-2 pt-2 pr-10 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
+                      className="w-full bg-transparent focus:bg-[#282c3c]/75 border-0 border-b border-[#444449] focus:border-[#9065ff] px-2.5 pb-2 pt-2 pr-10 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
                     />
                     <button
                       type="button"
                       onClick={() => setShowProfilePassword(!showProfilePassword)}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#00d4ff] transition-colors p-1"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#b895ff] transition-colors p-1"
                       aria-label="Toggle password visibility"
                     >
                       {showProfilePassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -397,23 +432,23 @@ export default function PortalPage() {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="••••••••••••"
-                    className="w-full bg-transparent focus:bg-[#131d36]/75 border-0 border-b border-gray-600 focus:border-[#00d4ff] px-2.5 pb-2 pt-2 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
+                    className="w-full bg-transparent focus:bg-[#282c3c]/75 border-0 border-b border-[#444449] focus:border-[#9065ff] px-2.5 pb-2 pt-2 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
                   />
                 </div>
 
                 {/* Password Criteria Checklist - Mirrors Screenshot exactly */}
                 <div className="pt-1 space-y-1 font-mono text-xs text-left">
                   <p className="text-gray-400">Password must contain:</p>
-                  <p className={hasMinLength ? "text-emerald-400 flex items-center gap-1.5" : "text-[#f87171] flex items-center gap-1.5"}>
+                  <p className={hasMinLength ? "text-[#4ade80] flex items-center gap-1.5" : "text-[#f87171] flex items-center gap-1.5"}>
                     <span>-</span> At least 6 characters
                   </p>
-                  <p className={hasLowerCase ? "text-emerald-400 flex items-center gap-1.5" : "text-[#f87171] flex items-center gap-1.5"}>
+                  <p className={hasLowerCase ? "text-[#4ade80] flex items-center gap-1.5" : "text-[#f87171] flex items-center gap-1.5"}>
                     <span>-</span> A lower case letter
                   </p>
-                  <p className={hasUpperCase ? "text-emerald-400 flex items-center gap-1.5" : "text-[#f87171] flex items-center gap-1.5"}>
+                  <p className={hasUpperCase ? "text-[#4ade80] flex items-center gap-1.5" : "text-[#f87171] flex items-center gap-1.5"}>
                     <span>-</span> An upper case letter
                   </p>
-                  <p className={hasNumber ? "text-emerald-400 flex items-center gap-1.5" : "text-[#f87171] flex items-center gap-1.5"}>
+                  <p className={hasNumber ? "text-[#4ade80] flex items-center gap-1.5" : "text-[#f87171] flex items-center gap-1.5"}>
                     <span>-</span> A number
                   </p>
                   {confirmPassword.length > 0 && !passwordsMatch && (
@@ -423,12 +458,12 @@ export default function PortalPage() {
                   )}
                 </div>
 
-                {/* REGISTER BUTTON (Electric Blue Brand Color) */}
+                {/* REGISTER BUTTON (Authentic 01Edu Purple) */}
                 <div className="flex justify-end pt-3">
                   <button
                     type="submit"
                     disabled={!canSubmitProfile || completeLoading}
-                    className="w-44 py-2.5 px-6 rounded bg-[#0066ff] hover:bg-[#0052cc] text-white font-mono text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed text-center shadow-[0_0_20px_rgba(0,102,255,0.45)] hover:shadow-[0_0_25px_rgba(0,102,255,0.7)]"
+                    className="w-36 py-2 px-6 rounded-[2px] bg-[#9065ff] hover:bg-[#7c3aed] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all duration-150 disabled:opacity-50 text-center shadow-[0_0_15px_rgba(144,101,255,0.35)] hover:shadow-[0_0_20px_rgba(144,101,255,0.5)] cursor-pointer"
                   >
                     {completeLoading ? 'SAVING...' : 'REGISTER'}
                   </button>
@@ -441,7 +476,7 @@ export default function PortalPage() {
                     <button
                       type="button"
                       onClick={() => setMode('login')}
-                      className="text-[#00d4ff] hover:text-white underline font-bold tracking-wider ml-1 transition-colors"
+                      className="text-[#b895ff] hover:text-white underline font-bold tracking-wider ml-1 transition-colors"
                     >
                       LOGIN HERE!
                     </button>
@@ -452,7 +487,7 @@ export default function PortalPage() {
           ) : mode === 'login' ? (
             <div>
               {/* Header */}
-              <h2 className="font-mono text-2xl sm:text-3xl font-normal tracking-wide text-[#38bdf8] mb-6">
+              <h2 className="font-mono text-2xl sm:text-3xl font-normal tracking-wide text-[#b895ff] mb-6">
                 Log in to resume your works
               </h2>
 
@@ -474,7 +509,7 @@ export default function PortalPage() {
                     value={emailOrUsername}
                     onChange={(e) => setEmailOrUsername(e.target.value)}
                     placeholder="victorejiki@gmail.com"
-                    className="w-full bg-transparent focus:bg-[#131d36]/75 border-0 border-b border-gray-600 focus:border-[#00d4ff] px-2.5 pb-2 pt-2 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
+                    className="w-full bg-transparent focus:bg-[#282c3c]/75 border-0 border-b border-[#444449] focus:border-[#9065ff] px-2.5 pb-2 pt-2 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
                   />
                 </div>
 
@@ -490,12 +525,12 @@ export default function PortalPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••••••"
-                      className="w-full bg-transparent focus:bg-[#131d36]/75 border-0 border-b border-gray-600 focus:border-[#00d4ff] px-2.5 pb-2 pt-2 pr-10 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
+                      className="w-full bg-transparent focus:bg-[#282c3c]/75 border-0 border-b border-[#444449] focus:border-[#9065ff] px-2.5 pb-2 pt-2 pr-10 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#00d4ff] transition-colors p-1"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#b895ff] transition-colors p-1"
                       aria-label="Toggle password visibility"
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -508,18 +543,18 @@ export default function PortalPage() {
                   <button
                     type="button"
                     onClick={() => setForgotModalOpen(true)}
-                    className="font-mono text-xs sm:text-sm text-gray-400 hover:text-[#00d4ff] transition-colors"
+                    className="font-mono text-xs sm:text-sm text-gray-400 hover:text-[#b895ff] transition-colors"
                   >
                     Forgot password? <span className="underline font-semibold">Click here!</span>
                   </button>
                 </div>
 
-                {/* LOGIN BUTTON (Electric Blue Brand Color) */}
+                {/* LOGIN BUTTON (Authentic 01Edu Purple) */}
                 <div className="flex justify-end pt-3">
                   <button
                     type="submit"
                     disabled={loginLoading}
-                    className="w-44 py-2.5 px-6 rounded bg-[#0066ff] hover:bg-[#0052cc] text-white font-mono text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-200 disabled:opacity-50 text-center shadow-[0_0_20px_rgba(0,102,255,0.45)] hover:shadow-[0_0_25px_rgba(0,102,255,0.7)]"
+                    className="w-36 py-2 px-6 rounded-[2px] bg-[#9065ff] hover:bg-[#7c3aed] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all duration-150 disabled:opacity-50 text-center shadow-[0_0_15px_rgba(144,101,255,0.35)] hover:shadow-[0_0_20px_rgba(144,101,255,0.5)] cursor-pointer"
                   >
                     {loginLoading ? 'LOGGING IN...' : 'LOGIN'}
                   </button>
@@ -532,7 +567,7 @@ export default function PortalPage() {
                     <button
                       type="button"
                       onClick={() => setMode('register')}
-                      className="text-[#00d4ff] hover:text-white underline font-bold tracking-wider ml-1 transition-colors"
+                      className="text-[#b895ff] hover:text-white underline font-bold tracking-wider ml-1 transition-colors"
                     >
                       REGISTER NOW!
                     </button>
@@ -564,16 +599,16 @@ export default function PortalPage() {
                     value={regEmail}
                     onChange={(e) => setRegEmail(e.target.value)}
                     placeholder="victorejiki@gmail.com"
-                    className="w-full bg-transparent focus:bg-[#131d36]/75 border-0 border-b border-gray-600 focus:border-[#00d4ff] px-2.5 pb-2 pt-2 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
+                    className="w-full bg-transparent focus:bg-[#282c3c]/75 border-0 border-b border-[#444449] focus:border-[#9065ff] px-2.5 pb-2 pt-2 text-base text-white placeholder-gray-500 focus:outline-none transition-all duration-200 font-mono rounded-t-sm"
                   />
                 </div>
 
-                {/* REGISTER BUTTON (Electric Blue Brand Color) */}
+                {/* REGISTER BUTTON (Authentic 01Edu Purple) */}
                 <div className="flex justify-end pt-3">
                   <button
                     type="submit"
                     disabled={regLoading}
-                    className="w-44 py-2.5 px-6 rounded bg-[#0066ff] hover:bg-[#0052cc] text-white font-mono text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-200 disabled:opacity-50 text-center shadow-[0_0_20px_rgba(0,102,255,0.45)] hover:shadow-[0_0_25px_rgba(0,102,255,0.7)]"
+                    className="w-36 py-2 px-6 rounded-[2px] bg-[#9065ff] hover:bg-[#7c3aed] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all duration-150 disabled:opacity-50 text-center shadow-[0_0_15px_rgba(144,101,255,0.35)] hover:shadow-[0_0_20px_rgba(144,101,255,0.5)] cursor-pointer"
                   >
                     {regLoading ? 'STARTING...' : 'REGISTER'}
                   </button>
@@ -586,7 +621,7 @@ export default function PortalPage() {
                     <button
                       type="button"
                       onClick={() => setMode('login')}
-                      className="text-[#00d4ff] hover:text-white underline font-bold tracking-wider ml-1 transition-colors"
+                      className="text-[#b895ff] hover:text-white underline font-bold tracking-wider ml-1 transition-colors"
                     >
                       LOGIN HERE!
                     </button>
@@ -601,7 +636,7 @@ export default function PortalPage() {
       {/* Forgot Password Dialog */}
       {forgotModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-          <div className="w-full max-w-sm bg-[#091124] border border-[#00d4ff]/30 rounded-lg p-6 space-y-4 font-mono shadow-2xl">
+          <div className="w-full max-w-sm bg-[#1e1e21] border border-[#9065ff]/40 rounded-lg p-6 space-y-4 font-mono shadow-2xl">
             <h3 className="text-base font-medium text-white">Reset Password</h3>
             <p className="text-xs text-gray-300 leading-relaxed">
               Enter your email address and we will dispatch a reset link.
@@ -609,7 +644,7 @@ export default function PortalPage() {
             <input
               type="email"
               placeholder="victorejiki@gmail.com"
-              className="w-full bg-[#030712] border border-white/10 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-[#00d4ff]"
+              className="w-full bg-[#141416] border border-[#444449] rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-[#9065ff]"
             />
             <div className="flex justify-end gap-3 pt-2 text-xs">
               <button
@@ -625,7 +660,7 @@ export default function PortalPage() {
                   alert('Reset link sent to your registered email address.');
                   setForgotModalOpen(false);
                 }}
-                className="px-4 py-1.5 rounded bg-[#0066ff] text-white font-medium hover:bg-[#0052cc] transition-colors"
+                className="px-4 py-1.5 rounded-[2px] bg-[#9065ff] text-white font-medium hover:bg-[#7c3aed] transition-colors"
               >
                 Send Reset Link
               </button>
@@ -636,39 +671,34 @@ export default function PortalPage() {
 
       {/* 
         ========================================================================
-        01Edu-IDENTICAL CONFIRMATION EMAIL MODAL OVERLAY
+        01Edu-IDENTICAL CONFIRMATION EMAIL MODAL OVERLAY (Screenshot 1)
         ========================================================================
       */}
       {confirmationModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-[2px] p-6 animate-in fade-in duration-200">
           <div className="w-full max-w-2xl text-center flex flex-col items-center justify-center space-y-8 font-mono">
-            <p className="text-xl sm:text-2xl text-white font-normal leading-relaxed max-w-xl mx-auto">
+            {/* Modal Heading matching screenshot */}
+            <h1 className="font-mono text-4xl sm:text-5xl font-bold tracking-tight text-white select-none">
+              Welcome to 01 !
+            </h1>
+
+            <p className="text-lg sm:text-xl text-gray-200 font-normal leading-relaxed max-w-xl mx-auto">
               A new confirmation email has been sent to{' '}
               <span className="text-white font-medium">{registeredEmail || 'your email'}</span>.
               Please check your inbox within the next 30m and click the verification link to complete your registration.
             </p>
 
-            <div className="flex flex-col items-center justify-center gap-3">
-              <button
-                type="button"
-                onClick={() => {
-                  setConfirmationModalOpen(false);
-                  setMode('login');
-                }}
-                className="w-36 py-2 px-8 bg-[#cccccc] hover:bg-white text-black font-mono text-sm uppercase tracking-wider font-semibold transition-all duration-150 rounded-[2px] shadow-lg"
-              >
-                OK
-              </button>
-
+            <div className="flex flex-col items-center justify-center gap-4">
+              {/* Authentic Grey Rectangle OK Button matching Screenshot 1 */}
               <button
                 type="button"
                 onClick={() => {
                   setConfirmationModalOpen(false);
                   setSearchParams({ 'email-token': 'demo-verified-token' });
                 }}
-                className="text-xs font-mono text-[#00d4ff] hover:underline pt-2 transition-colors cursor-pointer"
+                className="w-32 py-2 px-8 bg-[#cbcbcb] hover:bg-white text-black font-mono text-sm uppercase tracking-wider font-semibold transition-all duration-150 rounded-[2px] shadow-lg cursor-pointer"
               >
-                ⚡ Dev Demo: Click magic link to complete profile →
+                OK
               </button>
             </div>
           </div>

